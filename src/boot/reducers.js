@@ -1,0 +1,7 @@
+import login from '../views/Login/store/reducer';
+import menu from '../views/Home/store/reducer';
+
+export default {
+  login,
+  menu,
+};
