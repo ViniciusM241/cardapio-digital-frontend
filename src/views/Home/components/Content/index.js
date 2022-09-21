@@ -9,12 +9,15 @@ import {
   Container,
   Row,
 } from '~/components';
+import useBreakpoints from '~/hooks/useBreakpoints';
 
 function Content() {
+  const breakpoints = useBreakpoints();
+
   return (
-    <Wrapper className='mt-20'>
+    <Wrapper className={breakpoints.xs ? 'mt-20' : 'mt-40'}>
       <Container>
-        <Row>
+        <Row style={{ alignItems: 'flex-start' }}>
           <Head />
         </Row>
         <Row className="mt-10">

@@ -13,7 +13,7 @@ export const StyledBackground = styled.div`
     left: 0;
     top: 0;
 
-    width: 100vw;
+    width: 100%;
     height: 80vh;
 
     opacity: .2;

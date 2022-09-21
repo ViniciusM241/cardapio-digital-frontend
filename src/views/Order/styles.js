@@ -21,3 +21,10 @@ export const Wrapper = styled.div`
   flex-direction: column;
   justify-content: space-between;
 `;
+
+
+export const StyledError = styled.span`
+  color: ${colors.RED};
+  font-size: .7rem;
+  width: 100%;
+`;

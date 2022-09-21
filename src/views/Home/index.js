@@ -7,9 +7,11 @@ import { StyledBackground } from './styles'
 import Header from './components/Header';
 import Content from './components/Content';
 import Cart from './components/Cart';
+import useBreakpoints from '~/hooks/useBreakpoints';
 
 function MenuPage() {
   const dispatch = useDispatch();
+  const breakpoints = useBreakpoints();
 
   useEffect(() => {
     dispatch(getMenu());
@@ -19,7 +21,11 @@ function MenuPage() {
     <StyledBackground>
       <Header />
       <Content />
-      <Cart />
+      {
+        breakpoints.xs && (
+          <Cart />
+        )
+      }
     </StyledBackground>
   );
 }

@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const StyledImage = styled.img`
   width: 100%;
+  max-width: 115px;
 `;
 
 export const Wrapper = styled.header`
@@ -9,5 +10,4 @@ export const Wrapper = styled.header`
   display: flex;
   position: sticky;
   top: 0;
-  z-index: -1;
 `;

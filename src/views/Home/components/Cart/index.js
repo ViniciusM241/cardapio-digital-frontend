@@ -94,9 +94,13 @@ function Cart() {
                   Total de<br />
                   <strong>{formatPrice(cart.total)}</strong>
                 </Total>
-                <Button onClick={() => navigate('/pedidos')}>
-                  Continuar
-                </Button>
+                {
+                  !!cart.itemsOrdered.length && (
+                    <Button onClick={() => navigate('/pedidos')}>
+                      Continuar
+                    </Button>
+                  )
+                }
               </Inline>
             </Wrapper>
           </Container>

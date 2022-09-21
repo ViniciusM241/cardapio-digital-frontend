@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import Router from '~/layout/Router';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCustomer, createCustomer } from '../views/Home/store/actions';
+import { getCustomer, createCustomer, getCart } from '../views/Home/store/actions';
 import { getToken, setToken } from '~/boot/customerAuth';
 
 import GlobalStyle from './styles/GlobalStyle';
@@ -22,6 +22,7 @@ function Layout () {
 
     if (id) {
       dispatch(getCustomer(id));
+      dispatch(getCart(id));
     } else {
       dispatch(createCustomer());
     }

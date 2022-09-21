@@ -6,6 +6,7 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    font-size: 1rem;
   }
 
   body, html {
@@ -14,6 +15,24 @@ const GlobalStyle = createGlobalStyle`
     font-size: .9rem;
     color: ${colors.TEXT};
     font-family: 'Roboto', sans-serif;
+  }
+
+  ::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: ${colors.GREEN};
+    border-radius: 5px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: ${colors.GREEN};
   }
 
   .mt-10 {
@@ -46,6 +65,14 @@ const GlobalStyle = createGlobalStyle`
 
   .mr-10 {
     margin-right: 10px;
+  }
+
+  .ml-20 {
+    margin-left: 20px;
+  }
+
+  .mr-20 {
+    margin-right: 20px;
   }
 `;
 

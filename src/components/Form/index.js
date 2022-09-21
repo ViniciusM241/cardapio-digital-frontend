@@ -29,11 +29,11 @@ function Form({
       let errorsList = {};
 
       res.error.details.forEach(error => {
-          const field = error.context.key;
-          errorsList = {
-              ...errorsList,
-              [field]: error.message,
-          };
+        const field = error.context.key;
+        errorsList = {
+          ...errorsList,
+          [field]: error.message,
+        };
       });
 
       setErrors(errorsList);
@@ -128,6 +128,17 @@ function Form({
       };
     }
 
+    if (child.props?.name && child.props?.type === 'radio') {
+      newChild.props = {
+        ...child.props,
+        values: values,
+        error: errors[child.props.name],
+        onChange: (_, newState) => {
+          setValues(newState);
+        },
+      };
+    }
+
     return newChild;
   };
 
@@ -138,6 +149,7 @@ function Form({
       elements = childrenElements({
         values,
         onSubmit,
+        errors,
         setValue: handleOnChange,
       });
     }

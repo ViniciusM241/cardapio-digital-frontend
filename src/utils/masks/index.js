@@ -28,3 +28,13 @@ export function formatDate(date) {
 
   return moment(date).format('DD/MM/yyyy HH[h]MM');
 }
+
+export function currency(value) {
+  value = value.replace(/\D/g, '');
+  value = (value / 100).toFixed(2) + '';
+  value = value.replace(".", ",");
+  value = value.replace(/(d)(d{3})(d{3}),/g, "$1.$2.$3,");
+  value = value.replace(/(d)(d{3}),/g, "$1.$2,");
+
+  return value;
+}
