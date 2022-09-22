@@ -68,24 +68,25 @@ function MenuPage() {
     const API_URL = `https://api.whatsapp.com/send?phone=${process.env.REACT_APP_PHONENUMBER}`;
 
     const mensagem = `
-*🛎️#${response.id.padstart(3, '0')} NOVO PEDIDO*
+*🛎️#${String(response.id).padStart(3, '0')} NOVO PEDIDO*
 ${moment().format('DD/MM HH:mm')}
 
 *📄Pedido:*
 ${cart.itemsOrdered.map(item => `
-  ${item.quantity}x ${item.item.name} *${formatPrice(item.total)}*
-  ${item.extras.length ? item.extras.map(extra => `${extra.extraItemsOrdered.quantity}x ${extra.name} *${formatPrice(extra.value)}*`) : '' }
+${item.quantity}x ${item.item.name} *${formatPrice(item.total)}*
+${item.extras.length ? 'Adicionais:' : ''}
+${item.extras.length ? item.extras.map(extra => `${extra.extraItemsOrdered.quantity}x ${extra.name} *${formatPrice(extra.value)}*`).join('\n') : '' }
 
-`)}
+`).join('\n')}
 
 *👤Cliente:*
 ${values.fullName}
 
 *${values.deliveryMethod === 'DELIVERY' ? 'Subtotal' : 'Total'}:* ${formatPrice(cart.total)}
-${values.deliveryMethod === 'DELIVERY' ? `*Total com entrega:* ${formatPrice(parseFloat((cart.total) + response.deliveryFee || 5).toFixed(2).replace('.', ','))}` : ''}
+${values.deliveryMethod === 'DELIVERY' ? `*Total com entrega:* ${formatPrice((parseFloat(cart.total) + (response.params.deliveryFee || 5)).toFixed(2))}` : ''}
 
 *💰Pagamento:*
-${response.params.paymentMetohs[values.paymentMethod]}${values.paymentMethod === 'CASH' ? `, troco para ${formatPrice(values.change)}` : ''}
+${response.params.paymentMethods[values.paymentMethod].label}${values.paymentMethod === 'CASH' ? `, troco para ${formatPrice(values.change)}` : ''}
     `;
 
     return `${API_URL}&text=${encodeURIComponent(mensagem)}`;

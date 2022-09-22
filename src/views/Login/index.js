@@ -17,8 +17,6 @@ import {
 import {
   Container,
   Box,
-  BlueBackground,
-  TextureBackground,
   Logo,
   Error,
 } from './styles';
@@ -31,28 +29,26 @@ function Login() {
   const [error, setError] = useState('');
 
   const onSubmit = ({ values }) => {
-    if (!values.username || !values.password) return;
+    if (!values.email || !values.password) return;
 
     dispatch(login(
-      values.username,
+      values.email,
       values.password,
       (_, res) => {
         const { data } = res;
 
         if (!data.length) {
-          return setError('Usuario ou senha incorretos');
+          return setError('E-mail ou senha incorretos');
         }
 
         setToken(data[0].token);
-        navigate('/home');
+        navigate('/administrativo');
       }
     ));
   };
 
   return (
     <Container>
-      <BlueBackground breakpoints={breakpoints} />
-      <TextureBackground breakpoints={breakpoints} />
       <Inline
         left={!breakpoints.xs && !breakpoints.sm}
       >
@@ -68,21 +64,21 @@ function Login() {
           breakpoints={breakpoints}
         >
           <T1> Entrar </T1>
-          <T2 className="mt-10"> Entre com seu usuário e senha </T2>
+          <T2 className="mt-10"> Entre com seu e-mail e senha </T2>
           <Form
             className="mt-20"
             onSubmit={onSubmit}
             initialValues={{
-              username: '',
+              email: '',
               password: '',
             }}
           >
             <Input
               className="mb-20"
-              name="username"
+              name="email"
               type="text"
-              placeholder="Usuário"
-              label="Usuário"
+              placeholder="E-mail"
+              label="E-mail"
             />
             <Input
               className="mb-20"
