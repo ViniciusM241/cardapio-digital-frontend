@@ -6,7 +6,7 @@ export const Container = styled.div`
   border-top-right-radius: 50px;
 
   width: 100%;
-  height: 5%;
+  height: 10%;
   max-height: 50px;
   padding: 10px;
 
@@ -14,6 +14,7 @@ export const Container = styled.div`
   align-items: center;
   justify-content: flex-start;
 
+  z-index: 20;
   position: fixed;
   bottom: 0;
   left: 0;
@@ -56,11 +57,12 @@ export const CartWrapper = styled.div`
 `;
 
 export const Value = styled.p`
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   color: ${colors.BROWN_TEXT};
 
   & > strong {
     font-weight: bolder;
+    font-size: 1.3rem;
   }
 `;
 
@@ -69,6 +71,7 @@ export const CartItemWrapper = styled.div`
   height: 100vh;
   background-color: rgba(0, 0, 0, .6);
 
+  z-index: 50;
   position: fixed;
   top: 0;
   left: 0;

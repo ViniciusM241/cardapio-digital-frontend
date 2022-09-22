@@ -8,6 +8,17 @@ export const StyledImage = styled.img`
 export const Wrapper = styled.header`
   padding-top: 20px;
   display: flex;
-  position: sticky;
+  ${
+    props => props.xs ?
+      `
+        z-index: -1;
+        position: sticky;
+      `
+    :
+      `
+        z-index: 30;
+        position: relative;
+      `
+  }
   top: 0;
 `;

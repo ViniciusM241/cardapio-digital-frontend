@@ -27,12 +27,12 @@ const GlobalStyle = createGlobalStyle`
   }
 
   ::-webkit-scrollbar-thumb {
-    background: ${colors.GREEN};
+    background: ${colors.GRAY};
     border-radius: 5px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: ${colors.GREEN};
+    background: ${colors.GRAY};
   }
 
   .mt-10 {

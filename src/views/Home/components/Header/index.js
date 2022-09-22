@@ -20,7 +20,7 @@ function Header() {
   const breakpoints = useBreakpoints();
 
   return (
-    <Wrapper>
+    <Wrapper xs={breakpoints.xs}>
       <Container>
         <Col cols={2} xs={3} className="mt-20">
           <StyledImage src={logo} alt="Perrón! Tex Mex Logo" />

@@ -5,6 +5,15 @@ export const Wrapper = styled.div`
   width: 100%;
   display: flex;
   flex-direction: row;
+
+  cursor: pointer;
+  transition: all .2s ease;
+  padding: 5px 2px;
+  border-radius: 2px;
+
+  &:hover {
+    background-color: #e3e3e3;
+  }
 `;
 
 export const StyledImg = styled.div`
@@ -42,4 +51,5 @@ export const Button = styled.button`
   border-radius: 5px;
   color: #FFF;
   font-weight: bold;
+  cursor: pointer;
 `;

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { getMenu } from './store/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { getCart, getMenu } from './store/actions';
 
 import { StyledBackground } from './styles'
 
@@ -12,10 +12,15 @@ import useBreakpoints from '~/hooks/useBreakpoints';
 function MenuPage() {
   const dispatch = useDispatch();
   const breakpoints = useBreakpoints();
+  const customer = useSelector(state => state.menu.customer);
 
   useEffect(() => {
     dispatch(getMenu());
-  }, [getMenu]);
+
+    if (customer.id) {
+      dispatch(getCart(customer.id));
+    }
+  }, [getMenu, customer]);
 
   return (
     <StyledBackground>
