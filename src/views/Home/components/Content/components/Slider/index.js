@@ -7,10 +7,10 @@ import SliderItem from '../SliderItem';
 
 function Slider() {
   const menu = useSelector(state => state.menu.menu);
-  const items = menu.map(item => item.name);
+  const items = menu.map(item => item.items.length ? item.name : null).filter(Boolean);
 
   return (
-    <Wrapper>
+    <Wrapper className='mt-10'>
       {
         items.map((item, index) => (
           <SliderItem

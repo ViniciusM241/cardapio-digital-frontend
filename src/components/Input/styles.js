@@ -11,15 +11,15 @@ export const StyledInput = styled.input`
   border-radius: 5px;
   border: 1px solid #DFDFDF;
   outline: none;
-
 `;
 
 export const StyledLabel = styled.label`
   width: 100%;
+  font-weight: 400;
 `;
 
 export const StyledError = styled.span`
   color: ${colors.RED};
-  font-size: .7rem;
+  font-size: 1rem;
   width: 100%;
 `;

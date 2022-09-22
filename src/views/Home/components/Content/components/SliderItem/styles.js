@@ -4,6 +4,7 @@ import colors from "~/utils/colors";
 export const Container = styled.div`
   padding: 3px 10px;
   border-radius: 5px;
+  cursor: pointer;
 
   border: 1px solid ${colors.GREEN};
   color: ${props => props.active ? '#FFF' : colors.SLIDER_TEXT};
@@ -12,4 +13,11 @@ export const Container = styled.div`
   background-color: ${props => props.active ? colors.GREEN : '#FFF'};
 
   margin-right: 5px;
+
+  transition: all .2s ease;
+
+  &:hover {
+    background-color: ${colors.GREEN};
+    color: #FFF;
+  }
 `;

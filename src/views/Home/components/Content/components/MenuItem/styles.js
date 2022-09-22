@@ -1,8 +1,17 @@
 import styled from "styled-components";
 import { P } from '~/components';
+import colors from "~/utils/colors";
 
 export const Wrapper = styled.div`
+  cursor: pointer;
+  padding: 5px 1px;
+  border-radius: 2px;
 
+  transition: all .2s ease;
+
+  &:hover {
+    background-color: ${colors.GRAY}
+  }
 `;
 
 export const StyledP = styled(P)`

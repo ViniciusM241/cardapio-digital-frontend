@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import useBreakpoints from '~/hooks/useBreakpoints';
 import orderSchema from '~/utils/validations/orderSchema';
 import formatPrice from '~/utils/formatPrice';
 import { zipcode, phone, currency } from '~/utils/masks';
@@ -17,7 +18,6 @@ import {
   Form,
   Input,
   Button,
-  T2,
   Line,
   Radio,
 } from '~/components';
@@ -26,6 +26,7 @@ import moment from 'moment';
 
 function MenuPage() {
   const navigate = useNavigate();
+  const breakpoints = useBreakpoints();
 
   const customer = useSelector(state => state.menu.customer);
   const cart = useSelector(state => state.menu.cart);
@@ -103,10 +104,10 @@ ${response.params.paymentMetohs[values.paymentMethod]}${values.paymentMethod ===
     <>
       <Container>
         <Inline className="mt-40">
-          <Col cols={3}>
+          <Col cols={1} xs={3}>
             <StyledMdKeyboardArrowLeft onClick={() => navigate('/')} />
           </Col>
-          <Col cols={9}>
+          <Col cols={11} xs={9}>
             <T1>Pedido</T1>
           </Col>
         </Inline>
@@ -131,7 +132,7 @@ ${response.params.paymentMetohs[values.paymentMethod]}${values.paymentMethod ===
               <Wrapper>
                 <div>
                   <Inline className="mt-20">
-                    <T2>Dados pessoais</T2>
+                    <T1 style={{ fontWeight: '400' }}>Dados pessoais</T1>
                     <Line className="mt-10" />
                     <Input
                       className="mt-10"
@@ -154,7 +155,7 @@ ${response.params.paymentMetohs[values.paymentMethod]}${values.paymentMethod ===
                     />
                   </Inline>
                   <Inline className="mt-20">
-                    <T2>Forma de entrega</T2>
+                    <T1 style={{ fontWeight: '400' }}>Forma de entrega</T1>
                     <Line className="mt-10" />
                     <Col cols={6}>
                       <Radio
@@ -183,7 +184,7 @@ ${response.params.paymentMetohs[values.paymentMethod]}${values.paymentMethod ===
                   {
                     values.deliveryMethod === 'DELIVERY' ? (
                       <Inline className="mt-20">
-                        <T2>Endereço</T2>
+                        <T1 style={{ fontWeight: '400' }}>Endereço</T1>
                         <Line className="mt-10" />
                         <Col cols={6}>
                           <Input
@@ -228,9 +229,9 @@ ${response.params.paymentMetohs[values.paymentMethod]}${values.paymentMethod ===
                     ) : ''
                   }
                   <Inline className="mt-20">
-                    <T2>Forma de pagamento</T2>
+                    <T1 style={{ fontWeight: '400' }}>Forma de pagamento</T1>
                     <Line className="mt-10" />
-                    <Col cols={12}>
+                    <Col cols={3} xs={12}>
                       <Radio
                         type="radio"
                         value="CREDIT"
@@ -238,7 +239,7 @@ ${response.params.paymentMetohs[values.paymentMethod]}${values.paymentMethod ===
                         label="Cartão de Crédito"
                       />
                     </Col>
-                    <Col cols={12}>
+                    <Col cols={3} xs={12}>
                       <Radio
                         type="radio"
                         value="DEBIT"
@@ -246,7 +247,7 @@ ${response.params.paymentMetohs[values.paymentMethod]}${values.paymentMethod ===
                         label="Cartão de Débito"
                       />
                     </Col>
-                    <Col cols={12}>
+                    <Col cols={3} xs={12}>
                       <Radio
                         type="radio"
                         value="PIX"
@@ -254,7 +255,7 @@ ${response.params.paymentMetohs[values.paymentMethod]}${values.paymentMethod ===
                         label="PIX"
                       />
                     </Col>
-                    <Col cols={12}>
+                    <Col cols={3} xs={12}>
                       <Radio
                         type="radio"
                         value="CASH"
@@ -264,16 +265,18 @@ ${response.params.paymentMetohs[values.paymentMethod]}${values.paymentMethod ===
                     </Col>
                     {
                       values.paymentMethod === 'CASH' ? (
-                        <Input
-                          className="mt-10"
-                          type="text"
-                          placeholder="Digite aqui..."
-                          label="Troco?"
-                          name="change"
-                          onChange={(e) => {
-                            return currency(e);
-                          }}
-                        />
+                        <Col cols={6} xs={12}>
+                          <Input
+                            className="mt-10"
+                            type="text"
+                            placeholder="Digite aqui..."
+                            label="Troco?"
+                            name="change"
+                            onChange={(e) => {
+                              return currency(e);
+                            }}
+                          />
+                        </Col>
                       ) : ''
                     }
                     {
@@ -285,10 +288,10 @@ ${response.params.paymentMetohs[values.paymentMethod]}${values.paymentMethod ===
                     }
                   </Inline>
                 </div>
-                <Inline style={{ justifyContent: 'space-between' }}>
-                  <Total>
-                    Total de<br />
-                    <strong>{formatPrice(cart.total)}</strong>
+                <Inline style={{ justifyContent: breakpoints.xs ? 'space-between' : 'flex-end' }} className='mt-20 mb-20'>
+                  <Total className="mr-20">
+                    Total {values.deliveryMethod === 'DELIVERY' ? 'com entrega' : ''} de<br />
+                    <strong>{formatPrice(values.deliveryMethod === 'DELIVERY' ? (Number(cart.total) + 5).toFixed(2) : cart.total)}</strong>
                   </Total>
                   <Button type="submit" isLoading={isLoading}>
                     Finalizar

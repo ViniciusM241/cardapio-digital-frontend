@@ -16,11 +16,12 @@ export const Container = styled.div`
 
 export const StyledLabel = styled.label`
   width: 100%;
+  color: ${colors.TEXT};
+  font-weight: normal;
 `;
 
 export const StyledInput = styled.input`
   border: 0;
-  padding: 5px 0;
 
   -webkit-appearance: none;
   appearance: none;
@@ -36,7 +37,6 @@ export const StyledInput = styled.input`
   transform: translateY(-1px);
 
   font-size: 1rem;
-  color: #000;
 
   ${({styled}) => (
     styled &&
@@ -61,8 +61,8 @@ export const StyledInput = styled.input`
 
   &::after {
     content: '';
-    width: .5rem;
-    height: .5rem;
+    width: .4rem;
+    height: .4rem;
     display: block;
     border-radius: .1rem;
     background-color: ${colors.GREEN};

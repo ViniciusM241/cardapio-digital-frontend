@@ -13,6 +13,8 @@ export const ActionButtons = styled.div`
   justify-content: space-between;
   align-items: center;
   gap: 10px;
+
+  cursor: pointer;
 `;
 
 export const Button = styled.button`
@@ -25,4 +27,6 @@ export const Button = styled.button`
   border-radius: 5px;
   color: #FFF;
   font-weight: bold;
+
+  cursor: pointer;
 `;

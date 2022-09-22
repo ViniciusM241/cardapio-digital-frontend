@@ -18,9 +18,11 @@ function ExtraItem({ item }) {
   const increaseExtraQuantity = () => {
     const newExtras = extras.map(extra => {
       if (extra.id === item.id) {
+        const quantity = (extra.quantity || 0) + 1 > 5 ? 5 : (extra.quantity || 0) + 1
+
         return {
           ...extra,
-          quantity: (extra.quantity || 0) + 1,
+          quantity,
         };
       }
       else {

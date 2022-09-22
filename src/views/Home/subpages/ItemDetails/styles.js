@@ -7,6 +7,15 @@ export const StyledMdKeyboardArrowLeft = styled(MdKeyboardArrowLeft)`
   color: #FFF;
   background-color: ${colors.GREEN};
   border-radius: 100%;
+
+  cursor: pointer;
+  transition: all .2s ease;
+
+  &:hover {
+    background-color: #FFF;
+    border: 1px solid ${colors.GREEN};
+    color: ${colors.TEXT};
+  }
 `;
 
 export const StyledImg = styled.div`
@@ -51,4 +60,6 @@ export const ActionButton = styled.button`
   border-radius: 5px;
   color: #FFF;
   font-weight: bold;
+
+  cursor: pointer;
 `;
