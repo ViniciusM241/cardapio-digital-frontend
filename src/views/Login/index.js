@@ -15,9 +15,7 @@ import {
 } from '~/components';
 
 import {
-  Container,
   Box,
-  Logo,
   Error,
 } from './styles';
 
@@ -31,73 +29,70 @@ function Login() {
   const onSubmit = ({ values }) => {
     if (!values.email || !values.password) return;
 
+    const body = {
+      email: values.email,
+      password: values.password,
+    };
+
     dispatch(login(
-      values.email,
-      values.password,
+      body,
       (_, res) => {
         const { data } = res;
 
-        if (!data.length) {
+        if (data.status === '400') {
           return setError('E-mail ou senha incorretos');
         }
 
-        setToken(data[0].token);
+        setToken(data.token);
         navigate('/administrativo');
       }
     ));
   };
 
   return (
-    <Container>
-      <Inline
-        left={!breakpoints.xs && !breakpoints.sm}
+    <Inline
+      center
+      style={{
+        height: '90vh',
+      }}
+    >
+      <Box
+        breakpoints={breakpoints}
       >
-        <Logo />
-      </Inline>
-      <Inline
-        center
-        style={{
-          height: '80vh',
-        }}
-      >
-        <Box
-          breakpoints={breakpoints}
+        <T1> Entrar </T1>
+        <T2 className="mt-10"> Entre com seu e-mail e senha </T2>
+        <Form
+          className="mt-20"
+          onSubmit={onSubmit}
+          initialValues={{
+            email: '',
+            password: '',
+          }}
         >
-          <T1> Entrar </T1>
-          <T2 className="mt-10"> Entre com seu e-mail e senha </T2>
-          <Form
-            className="mt-20"
-            onSubmit={onSubmit}
-            initialValues={{
-              email: '',
-              password: '',
-            }}
+          <Input
+            className="mb-20"
+            name="email"
+            type="text"
+            placeholder="E-mail"
+            label="E-mail"
+          />
+          <Input
+            className="mb-20"
+            name="password"
+            type="password"
+            placeholder="Senha"
+            label="Senha"
+          />
+          <Error>{error || '\u00A0'}</Error>
+          <Inline
+            className="mt-40"
+            right
           >
-            <Input
-              className="mb-20"
-              name="email"
-              type="text"
-              placeholder="E-mail"
-              label="E-mail"
-            />
-            <Input
-              className="mb-20"
-              name="password"
-              type="password"
-              placeholder="Senha"
-              label="Senha"
-            />
-            <Error>{error || '\u00A0'}</Error>
-            <Inline
-              className="mt-40"
-              right
-            >
-              <Button type="submit" isLoading={isLoading}> Entrar </Button>
-            </Inline>
-          </Form>
-        </Box>
-      </Inline>
-    </Container>
+            <Button type="submit" isLoading={isLoading}> Entrar </Button>
+          </Inline>
+        </Form>
+      </Box>
+    </Inline>
   );
 }
 

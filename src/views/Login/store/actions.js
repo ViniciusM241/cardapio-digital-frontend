@@ -1,14 +1,15 @@
 import types from "./types";
 
-export function login(username, password, cb) {
+export function login(body, cb) {
   return async (dispatch) => {
     try {
       const data = await dispatch({
         type: types.LOGIN,
         payload: {
           request: {
-            url: `/users?username=${username}&password=${password}`,
-            method: 'GET',
+            url: `/auth`,
+            method: 'POST',
+            data: body,
           },
         },
       });

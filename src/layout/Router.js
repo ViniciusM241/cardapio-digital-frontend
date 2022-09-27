@@ -10,6 +10,7 @@ import routes from '~/routes';
 
 import NotFound from '~/views/NotFound';
 import SuspenseLoading from '~/components/SuspenseLoading';
+import Header from './Header';
 
 function CustomRouter () {
   const dispatch = useDispatch();
@@ -17,6 +18,7 @@ function CustomRouter () {
   return (
     <Suspense fallback={<SuspenseLoading />}>
       <BrowserRouter>
+        <Header />
         <main style={{ height: '100vh' }}>
           <Routes>
             {

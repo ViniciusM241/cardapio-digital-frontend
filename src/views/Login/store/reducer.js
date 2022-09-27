@@ -4,8 +4,10 @@ import types from "./types";
 const INITIAL_STATE = {
   isLoading: false,
   user: {
-    username: '',
-    token: ''
+    id: null,
+    email: '',
+    name: '',
+    token: '',
   },
 }
 
@@ -33,11 +35,11 @@ const reducer = handleActions(
     }),
     [types.LOGIN_SUCCESS]: (state, { payload: { data } }) => ({
       ...state,
-      user: data[0],
+      user: { ...state.user, token: data.token },
     }),
     [types.GET_USER_BY_TOKEN_SUCCESS]: (state, { payload: { data } }) => ({
       ...state,
-      user: data[0],
+      user: data,
     }),
   },
   INITIAL_STATE
