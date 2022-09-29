@@ -37,13 +37,11 @@ function Login() {
     dispatch(login(
       body,
       (_, res) => {
-        const { data } = res;
-
-        if (data.status === '400') {
-          return setError('E-mail ou senha incorretos');
+        if (!res) {
+          return setError('Usuario ou senha incorretos');
         }
 
-        setToken(data.token);
+        setToken(res.data.token);
         navigate('/administrativo');
       }
     ));

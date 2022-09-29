@@ -1,6 +1,7 @@
 import React from 'react';
 import isLogged from '~/middlewares/isLogged';
 const AdminPage = React.lazy(() => import('./index'));
+const Logout = React.lazy(() => import('./subpages/Logout'));
 
 export default [
   {
@@ -11,5 +12,11 @@ export default [
     middlewares: [
       isLogged,
     ],
+  },
+  {
+    path: '/administrativo/sair',
+    element: Logout,
+    exact: true,
+    title: 'Perrón! Cardápio - Admin',
   },
 ];

@@ -11,7 +11,7 @@ function Menu(props) {
 
   return (
     <MenuContainer active={props.path === location.pathname}>
-      <StyledLink to={props.to} active={props.path === location.pathname}>{props.children}</StyledLink>
+      <StyledLink to={props.to} active={props.path === location.pathname ? 1 : 0}>{props.children}</StyledLink>
     </MenuContainer>
   );
 }

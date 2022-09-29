@@ -12,7 +12,7 @@ function calcWidth(breakpoints) {
     columns = 8;
   }
 
-  const calc = 65 * columns + (columns - 1) * gap;
+  const calc = 70 * columns + (columns - 1) * gap;
 
   return calc;
 }

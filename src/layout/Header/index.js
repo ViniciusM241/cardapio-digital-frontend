@@ -13,6 +13,7 @@ import {
 } from '~/components';
 import NavigationBar from './components/NavigationBar';
 import MobileMenu from './components/MobileMenu';
+import Profile from './components/Profile';
 
 function Header() {
   const location = useLocation();
@@ -42,8 +43,8 @@ function Header() {
                   <Col cols={6}>
                     <NavigationBar />
                   </Col>
-                  <Col cols={2}>
-                    Vinicius Melo
+                  <Col cols={1}>
+                    <Profile />
                   </Col>
                 </>
               )

@@ -15,7 +15,6 @@ export const NavigationBarContainer = styled.div`
     height: 5px;
     width: 100%;
     background-color: ${colors.GREEN};
-    border-radius: 8px;
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
     position: absolute;
@@ -26,13 +25,13 @@ export const NavigationBarContainer = styled.div`
 
 export const MenuContainer = styled.div`
   width: fit-content;
-  min-width: 100px;
+  min-width: 50px;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
 
-  padding: 9px 20px 15px;
+  padding: ${props => props.active ? '9px 20px 10px' : '9px 20px 15px'};
   border-radius: 8px;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;

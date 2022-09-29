@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCart, getMenu } from './store/actions';
+import { getCart, getMenu, getCustomer, createCustomer } from './store/actions';
+import { getToken, setToken } from '~/boot/customerAuth';
 
 import { StyledBackground } from './styles'
 
@@ -15,12 +16,29 @@ function MenuPage() {
   const customer = useSelector(state => state.menu.customer);
 
   useEffect(() => {
-    dispatch(getMenu());
-
     if (customer.id) {
-      dispatch(getCart(customer.id));
+      setToken(customer.id);
     }
-  }, [getMenu, customer]);
+  }, [customer]);
+
+  useEffect(() => {
+    const id = getToken();
+
+    if (id) {
+      dispatch(getCustomer(id));
+      dispatch(getCart(id));
+    } else {
+      dispatch(createCustomer());
+    }
+  }, [getToken, getCustomer, createCustomer]);
+
+  useEffect(() => {
+    dispatch(getMenu());
+  }, [getMenu]);
+
+  useEffect(() => {
+    dispatch(getCart(customer.id));
+  }, [customer]);
 
   return (
     <StyledBackground>

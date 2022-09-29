@@ -3,18 +3,20 @@ import types from './types';
 
 const INITIAL_STATE = {
   isLoading: false,
-  user: {
-
+  profile: {
+    id: '',
+    name: '',
+    email: '',
   },
 };
 
 const beginLoading = combineActions(
-  types.GET_USER,
+  types.GET_PROFILE,
 );
 
 const stopLoading = combineActions(
-  types.GET_USER_SUCCESS,
-  types.GET_USER_FAIL,
+  types.GET_PROFILE_SUCCESS,
+  types.GET_PROFILE_FAIL,
 );
 
 const reducer = handleActions(
@@ -27,9 +29,9 @@ const reducer = handleActions(
       ...state,
       isLoding: false,
     }),
-    [types.GET_USER_SUCCESS]: (state, { payload: { data } }) => ({
+    [types.GET_PROFILE_SUCCESS]: (state, { payload: { data } }) => ({
       ...state,
-      user: data,
+      profile: data,
     }),
   },
   INITIAL_STATE

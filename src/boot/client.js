@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getToken } from './auth';
+import { getToken, removeToken } from './auth';
 
 const client = axios.create({
   baseURL: process.env.REACT_APP_API_BASE_URL,
@@ -15,8 +15,19 @@ client.interceptors.request.use((config) => {
   return config;
 });
 
-client.interceptors.response.use((config) => {
-  return config;
-});
+client.interceptors.response.use((response) => response,
+  (err) => {
+    if (window.location.href.includes('login'))
+      throw err;
+
+    if (err?.response?.status === 401) {
+      alert('Login necessário');
+      removeToken();
+      window.location.href = '/login';
+    }
+
+    return err?.response;
+  }
+);
 
 export default client;
