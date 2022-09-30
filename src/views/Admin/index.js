@@ -2,6 +2,10 @@ import React, { useEffect, useState } from 'react';
 import useBreakpoints from '~/hooks/useBreakpoints';
 import getReports from './services/getReports';
 
+import "react-datepicker/dist/react-datepicker.css";
+import { DatePickerStyles } from './styles';
+import { MdCalendarToday } from 'react-icons/md';
+
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -27,7 +31,9 @@ import {
   T1,
 } from '~/components';
 import Box from './components/Box';
+import DatePicker from "react-datepicker";
 import colors from '~/utils/colors';
+import moment from 'moment';
 
 ChartJS.register(
   CategoryScale,
@@ -53,15 +59,29 @@ const options = {
   },
 };
 
+const options2 = {
+  responsive: true,
+  plugins: {
+    legend: {
+      position: 'right',
+    },
+    title: {
+      display: false,
+    },
+  },
+};
+
 function AdminPage() {
   const breakpoints = useBreakpoints();
 
   const [reports, setReports]= useState({});
-  const [filters, setFilters]= useState('');
   const [ordersADaydata, setOrdersADayData]= useState({});
   const [paymentsPerOrdersData, setPaymentsPerOrdersData]= useState({});
+  const [startDate, setStartDate] = useState(new Date());
 
   const _getReports = async () => {
+    const date = moment(startDate).format('yyyy-MM-DD');
+    const filters = `initDate=${date}`;
     const response = await getReports(filters);
 
     setReports(response);
@@ -70,16 +90,12 @@ function AdminPage() {
   useEffect(() => {
     _getReports();
 
-    const interval = () => {
-      setInterval(() => {
-        _getReports();
-      }, 50000);
-    };
-
-    interval();
+    const interval = setInterval(() => {
+      _getReports();
+    }, 10000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [startDate]);
 
   useEffect(() => {
     const labels = reports?.totalOrdersADay?.map(x => x['DATE(`createdAt`)']);
@@ -127,7 +143,12 @@ function AdminPage() {
     <Container>
       <Col cols={12}>
         <Inline className='mb-10' right>
-          Calendar
+          <DatePicker
+            selected={startDate}
+            dateFormat="dd/MM/yyyy"
+            onChange={(date) => setStartDate(date)}
+          />
+          <MdCalendarToday className="ml-10" style={{ fontSize: '1.3rem' }} />
         </Inline>
       </Col>
       <Col cols={6} xs={12}>
@@ -140,7 +161,7 @@ function AdminPage() {
       <Col className={breakpoints.xs ? 'mt-10' : ''} cols={6} xs={12}>
         <Box title='Tempo médio de pedido'>
           <T1 style={{ color: colors.RED, fontSize: '5rem', fontWeight: '400' }}>
-            {reports?.avgOrderTime}m
+            {reports?.avgOrderTime || '00'}m
           </T1>
         </Box>
       </Col>
@@ -157,11 +178,12 @@ function AdminPage() {
         <Box title='Pagamentos por pedidos'>
           {
             paymentsPerOrdersData.labels && (
-              <Doughnut options={{scales: 2}} className='mt-20' data={paymentsPerOrdersData} />
+              <Doughnut options={options2} className='mt-20' data={paymentsPerOrdersData} />
             )
           }
         </Box>
       </Col>
+      <DatePickerStyles />
     </Container>
   );
 }

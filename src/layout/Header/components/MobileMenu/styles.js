@@ -10,6 +10,7 @@ export const Container = styled.div`
   bottom: 0;
   left: 0;
   right: 0;
+  z-index: 40;
 
   &.closed {
     display: none;
@@ -27,6 +28,7 @@ export const MenuContainer = styled.div`
   top: 0;
   left: 0;
   right: 0;
+  z-index: 50;
 
   transition: all .3s ease;
 
