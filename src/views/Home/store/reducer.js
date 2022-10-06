@@ -98,10 +98,15 @@ const reducer = handleActions(
       ...state,
       selectedItemOrdered: data,
     }),
-    [types.CREATE_CUSTOMER_SUCCESS]: (state, { payload: { data } }) => ({
-      ...state,
-      customer: data,
-    }),
+    [types.CREATE_CUSTOMER_SUCCESS]: (state, { payload: { data } }) => {
+      if (data.status === 400)
+        return state;
+
+      return {
+        ...state,
+        customer: data,
+      };
+    },
     [types.SET_EXTRAS]: (state, { payload: { data } }) => ({
       ...state,
       selectedItem: {

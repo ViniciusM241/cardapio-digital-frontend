@@ -5,6 +5,15 @@ export const Container = styled.div`
   width: 100%;
   border-radius: 10px;
   box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.25);
-  min-height: 200px;
+  min-height: 220px;
   padding: 10px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+`;
+
+export const Content = styled.div`
+  margin-left: 20px;
 `;

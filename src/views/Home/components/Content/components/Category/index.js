@@ -9,8 +9,8 @@ function Category({ category }) {
   if (!category.items.length) return null;
 
   return (
-    <Wrapper className='mt-10' id={`${encodeURI(category.name)}`}>
-      <T1 className='mb-10' style={{ fontWeight: '500' }}>{category.name}</T1>
+    <Wrapper className='mt-10'>
+      <T1 id={`${encodeURI(category.name)}`} className='mb-10' style={{ fontWeight: '500' }}>{category.name}</T1>
       <Line />
       {
         category.items.map(item => (

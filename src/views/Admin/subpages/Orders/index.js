@@ -7,6 +7,7 @@ import {
   Col,
   Container,
   Inline,
+  P,
 } from '~/components';
 import OrderItem from './components/OrderItem';
 
@@ -23,6 +24,12 @@ function Orders() {
 
   useEffect(() => {
     _getOrders();
+
+    const interval = setInterval(() => {
+      _getOrders();
+    }, 10000);
+
+    return () => clearInterval(interval);
   }, [orderStatus]);
 
   return (
@@ -45,11 +52,13 @@ function Orders() {
       </Col>
       <Inline className="mt-20">
         {
-          orders.map(order => (
-            <Col key={order.id} cols={4} xs={12}>
-              <OrderItem order={order} />
-            </Col>
-          ))
+          orders.length ?
+            orders.map(order => (
+              <Col key={order.id} cols={4} xs={12} className="mb-20">
+                <OrderItem order={order} updateOrders={_getOrders} />
+              </Col>
+            ))
+          : <P>Nenhum pedido encontrado</P>
         }
       </Inline>
     </Container>

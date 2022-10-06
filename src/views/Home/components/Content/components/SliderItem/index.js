@@ -12,6 +12,10 @@ function SliderItem({
   const hash = location.hash;
 
   const redirect = () => {
+    const top = document.getElementById(encodeURI(item.title)).offsetTop;
+
+    window.scrollTo({ top, behavior: 'smooth' });
+
     navigate(`/#${encodeURI(item.title)}`);
   };
 
