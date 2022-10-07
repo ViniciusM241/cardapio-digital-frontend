@@ -43,7 +43,7 @@ function Header() {
                   <Col cols={6}>
                     <NavigationBar />
                   </Col>
-                  <Col cols={1}>
+                  <Col cols={2}>
                     <Profile />
                   </Col>
                 </>

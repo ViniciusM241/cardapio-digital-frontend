@@ -57,6 +57,15 @@ const options = {
       display: false,
     },
   },
+  scales: {
+    yAxes: {
+      ticks: {
+        stepSize: 1
+      },
+      min: 0,
+      suggestedMax: 10,
+    }
+  }
 };
 
 const options2 = {
@@ -98,7 +107,10 @@ function AdminPage() {
   }, [startDate]);
 
   useEffect(() => {
-    const labels = reports?.totalOrdersADay?.map(x => x['DATE(`createdAt`)']);
+    const labels = reports?.totalOrdersADay?.map(x => {
+      const date = moment(x['DATE(`createdAt`)']);
+      return date.format('DD/MM');
+    });
 
     const newData = {
       datasets: [
@@ -159,9 +171,14 @@ function AdminPage() {
         </Box>
       </Col>
       <Col className={breakpoints.xs ? 'mt-10' : ''} cols={6} xs={12}>
-        <Box title='Tempo médio de pedido'>
+        <Box title='Tempo médio de preparo'>
           <T1 style={{ color: colors.RED, fontSize: '5rem', fontWeight: '400' }}>
-            {reports?.avgOrderTime || '00'}m
+            {
+              reports?.avgOrderTime ?
+                reports.avgOrderTime >= 60 ? `${reports.avgOrderTime / 60}h` : `${reports.avgOrderTime}m`
+              :
+                '00'
+            }
           </T1>
         </Box>
       </Col>

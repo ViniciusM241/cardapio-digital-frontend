@@ -5,6 +5,6 @@ export const StyledP = styled.p`
   font-weight: 400;
   color: ${colors.TEXT};
   font-size: 1.2rem;
-  display: flex;
-  align-items: center;
+  /* display: flex;
+  align-items: center; */
 `;

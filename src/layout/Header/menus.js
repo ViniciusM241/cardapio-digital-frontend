@@ -4,6 +4,7 @@ import {
   MdPerson,
   MdOutlineNoteAlt,
   MdLogout,
+  MdOutlineQrCode2,
 } from 'react-icons/md';
 
 export default [
@@ -35,6 +36,6 @@ export default [
     path: '/administrativo/configuracoes',
     to: '/administrativo/configuracoes',
     name: 'Configurações',
-    icon: MdOutlineNoteAlt,
+    icon: MdOutlineQrCode2,
   },
 ];

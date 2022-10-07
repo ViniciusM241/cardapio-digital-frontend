@@ -16,10 +16,10 @@ function Orders() {
   const [orders, setOrders] = useState([]);
 
   const _getOrders = async () => {
-    const filters = `status=${orderStatus}`;
+    const filters = `status=${orderStatus}${orderStatus === 'FINISHED' ? '&limit=15' : ''}`;
     const data = await getOrders(filters);
 
-    setOrders(data);
+    setOrders(data || []);
   };
 
   useEffect(() => {

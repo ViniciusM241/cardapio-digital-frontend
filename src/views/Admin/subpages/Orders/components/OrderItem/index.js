@@ -41,9 +41,9 @@ function OrderItem({ order, updateOrders, ...props }) {
           }
         </Inline>
         <Content className="mt-20" onClick={redirect}>
-          <P><MdPerson style={{ fontSize: '1.5rem' }} className='mr-10' />{order.customer.name}</P>
-          <P><MdDeliveryDining style={{ fontSize: '1.5rem' }} className='mr-10' />{order.deliveryMethodLabel}</P>
-          <P><MdCreditCard style={{ fontSize: '1.5rem' }} className='mr-10' />{order.paymentMethodLabel}</P>
+          <P style={{ display: 'flex', alignItems: 'center' }}><MdPerson style={{ fontSize: '1.5rem' }} className='mr-10' />{order.customer.name}</P>
+          <P style={{ display: 'flex', alignItems: 'center' }}><MdDeliveryDining style={{ fontSize: '1.5rem' }} className='mr-10' />{order.deliveryMethodLabel}</P>
+          <P style={{ display: 'flex', alignItems: 'center' }}><MdCreditCard style={{ fontSize: '1.5rem' }} className='mr-10' />{order.paymentMethodLabel}</P>
         </Content>
       </div>
       <Inline onClick={redirect}>
