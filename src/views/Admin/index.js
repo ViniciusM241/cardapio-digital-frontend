@@ -177,7 +177,7 @@ function AdminPage() {
               reports?.avgOrderTime ?
                 reports.avgOrderTime >= 60 ? `${reports.avgOrderTime / 60}h` : `${reports.avgOrderTime}m`
               :
-                '00'
+                '00m'
             }
           </T1>
         </Box>

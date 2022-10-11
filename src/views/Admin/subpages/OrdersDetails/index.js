@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import getOrderById from './services/getOrderById';
-import { phone, zipcode } from '~/utils/masks';
+import { phone } from '~/utils/masks';
 
 import { StyledMdKeyboardArrowLeft } from './styles';
 
@@ -16,6 +16,7 @@ import {
   Line,
 } from '~/components';
 import OrderItemStatus from '../Orders/components/OrderItemStatus';
+import ItemBox from '../../components/ItemBox';
 
 function OrdersDetails() {
   const navigate = useNavigate();
@@ -224,6 +225,18 @@ function OrdersDetails() {
             )
           }
         </Form>
+        <Inline className="mt-20 mb-40">
+          <T1 style={{ fontWeight: '400' }}>Itens</T1>
+          <Line className="mt-10" />
+          {
+            order.itemsOrdered.map(itemOrdered => (
+              <React.Fragment key={itemOrdered.id}>
+                <ItemBox item={itemOrdered} />
+                <Line className="mt-10" />
+              </React.Fragment>
+            ))
+          }
+        </Inline>
       </Container>
     );
   }

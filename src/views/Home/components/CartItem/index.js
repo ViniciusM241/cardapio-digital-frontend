@@ -53,10 +53,10 @@ function CartItem({ item }) {
       <Col cols={4} onClick={redirect}>
         <Inline left>
           {
-            !item.imageURL ?
+            !item.item.imageURL ?
               <EmptyImage />
             :
-              <StyledImg src={item.imageURL} />
+              <StyledImg src={item.item.imageURL} />
           }
         </Inline>
       </Col>
