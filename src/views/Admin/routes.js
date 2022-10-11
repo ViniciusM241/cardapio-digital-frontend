@@ -6,6 +6,7 @@ const Logout = React.lazy(() => import('./subpages/Logout'));
 const Orders = React.lazy(() => import('./subpages/Orders'));
 const Config = React.lazy(() => import('./subpages/Config'));
 const OrdersDetails = React.lazy(() => import('./subpages/OrdersDetails'));
+const Menu = React.lazy(() => import('./subpages/Menu'));
 
 export default [
   {
@@ -47,6 +48,15 @@ export default [
   {
     path: '/administrativo/pedidos/:orderId/item-pedido/:id',
     element: ItemOrdersDetails,
+    exact: true,
+    title: 'Perrón! Cardápio - Admin',
+    middlewares: [
+      isLogged,
+    ],
+  },
+  {
+    path: '/administrativo/cardapio',
+    element: Menu,
     exact: true,
     title: 'Perrón! Cardápio - Admin',
     middlewares: [
