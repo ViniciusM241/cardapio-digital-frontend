@@ -1,6 +1,5 @@
-const Joi = require('joi');
-
-const messages = require('./messages');
+import Joi from 'joi';
+import messages from './messages';
 
 const schema = Joi.object().keys({
   fullName: Joi.string().required().label('Nome Completo').max(50).min(10).messages(messages),
@@ -50,4 +49,4 @@ const schema = Joi.object().keys({
   customerId: Joi.number().required(),
 });
 
-module.exports = schema;
+export default schema;

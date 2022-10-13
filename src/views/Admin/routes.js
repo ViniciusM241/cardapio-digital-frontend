@@ -7,6 +7,9 @@ const Orders = React.lazy(() => import('./subpages/Orders'));
 const Config = React.lazy(() => import('./subpages/Config'));
 const OrdersDetails = React.lazy(() => import('./subpages/OrdersDetails'));
 const Menu = React.lazy(() => import('./subpages/Menu'));
+const CategoryDetails = React.lazy(() => import('./subpages/Menu/subpages/CategoryDetails'));
+const ExtraDetails = React.lazy(() => import('./subpages/Menu/subpages/ExtraDetails'));
+const ItemDetails = React.lazy(() => import('./subpages/Menu/subpages/ItemDetails'));
 
 export default [
   {
@@ -57,6 +60,60 @@ export default [
   {
     path: '/administrativo/cardapio',
     element: Menu,
+    exact: true,
+    title: 'Perrón! Cardápio - Admin',
+    middlewares: [
+      isLogged,
+    ],
+  },
+  {
+    path: '/administrativo/cardapio/categorias/:id',
+    element: CategoryDetails,
+    exact: true,
+    title: 'Perrón! Cardápio - Admin',
+    middlewares: [
+      isLogged,
+    ],
+  },
+  {
+    path: '/administrativo/cardapio/categorias',
+    element: CategoryDetails,
+    exact: true,
+    title: 'Perrón! Cardápio - Admin',
+    middlewares: [
+      isLogged,
+    ],
+  },
+  {
+    path: '/administrativo/cardapio/adicionais/:id',
+    element: ExtraDetails,
+    exact: true,
+    title: 'Perrón! Cardápio - Admin',
+    middlewares: [
+      isLogged,
+    ],
+  },
+  {
+    path: '/administrativo/cardapio/adicionais',
+    element: ExtraDetails,
+    exact: true,
+    title: 'Perrón! Cardápio - Admin',
+    middlewares: [
+      isLogged,
+    ],
+  },
+  {
+    path: '/administrativo/cardapio/items/:id',
+    element: ItemDetails,
+    exact: true,
+    title: 'Perrón! Cardápio - Admin',
+    middlewares: [
+      isLogged,
+    ],
+  },
+  {
+    path: '/administrativo/cardapio/items',
+    element: ItemDetails,
     exact: true,
     title: 'Perrón! Cardápio - Admin',
     middlewares: [

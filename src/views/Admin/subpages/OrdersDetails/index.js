@@ -48,14 +48,14 @@ function OrdersDetails() {
           </Col>
         </Inline>
         <Inline className="mt-20">
-            <Col cols={5}>
+            <Col cols={9} xs={5}>
               <T1>
                 #{String(order.id).padStart(3, '0')}
               </T1>
             </Col>
             {
               order.status.value != 'FINISHED' && (
-                <Col cols={7}>
+                <Col cols={3} xs={7}>
                   <Inline right>
                     <OrderItemStatus updateOrders={() => {}} order={order} />
                   </Inline>

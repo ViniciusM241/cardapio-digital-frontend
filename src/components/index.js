@@ -15,3 +15,5 @@ export const Line = React.lazy(() => import('./Line'));
 export const P = React.lazy(() => import('./P'));
 export const EmptyImage = React.lazy(() => import('./EmptyImage'));
 export const Radio = React.lazy(() => import('./Radio'));
+export const Box = React.lazy(() => import('./Box'));
+export const CheckBox = React.lazy(() => import('./CheckBox'));

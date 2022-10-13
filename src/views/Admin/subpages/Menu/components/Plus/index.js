@@ -2,9 +2,9 @@ import React from 'react';
 
 import { Container, Ico } from './styles';
 
-function Plus() {
+function Plus(props) {
   return (
-    <Container>
+    <Container {...props}>
       <Ico>+</Ico>
     </Container>
   );

@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import getItems from './services/getItems';
 import getExtras from './services/getExtras';
 import getCategories from './services/getCategories';
+import { ToastContainer } from 'react-toastify';
 
 import { Item } from './styles';
 
@@ -12,26 +14,34 @@ import {
   P,
 } from '~/components';
 import Plus from './components/Plus';
+import CategoryBox from './components/CategoryBox';
+import ExtraBox from './components/ExtraBox';
+import ItemBox from './components/ItemBox';
 
 function Menu() {
+  const navigate = useNavigate();
+
   const [itemType, setItemType] = useState('ITEMS');
   const [items, setItems] = useState([]);
 
   const itens = {
     'ITEMS': {
-      component: null,
+      component: ItemBox,
       function: getItems,
       label: 'item',
+      redirect: '/administrativo/cardapio/itens',
     },
     'EXTRAS': {
-      component: null,
+      component: ExtraBox,
       function: getExtras,
       label: 'adicional',
+      redirect: '/administrativo/cardapio/adicionais',
     },
     'CATEGORIES': {
-      component: null,
+      component: CategoryBox,
       function: getCategories,
       label: 'categoria',
+      redirect: '/administrativo/cardapio/categorias',
     },
   }
 
@@ -39,6 +49,10 @@ function Menu() {
     const data = await itens[itemType].function();
 
     setItems(data || []);
+  };
+
+  const redirect = () => {
+    navigate(itens[itemType].redirect);
   };
 
   useEffect(() => {
@@ -77,15 +91,19 @@ function Menu() {
             items.length ?
               items.map(item => (
                 <Col key={item.id} cols={4} xs={12} className="mb-20">
-                  {item.name}
-                  {/* <OrderItem order={order} /> */}
+                  {
+                    React.createElement(itens[itemType].component, {
+                      item,
+                    })
+                  }
                 </Col>
               ))
             : <P>Nenhum{itemType === 'CATEGORIES' ? 'a' : ''} {itens[itemType].label} encontrad{itemType === 'CATEGORIES' ? 'a' : 'o'}</P>
           }
         </Inline>
       </Container>
-      <Plus />
+      <Plus onClick={redirect} />
+      <ToastContainer />
     </>
   );
 }
