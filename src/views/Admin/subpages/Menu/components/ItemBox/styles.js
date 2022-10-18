@@ -2,7 +2,13 @@ import styled from 'styled-components';
 import { P } from '~/components';
 
 export const StyledImg = styled.div`
+  width: 100px;
+  height: 100px;
 
+  background-image: url('${props => props.src}');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
 `;
 
 export const LimitedP = styled(P)`

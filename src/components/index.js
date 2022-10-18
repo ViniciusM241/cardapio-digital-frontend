@@ -17,3 +17,5 @@ export const EmptyImage = React.lazy(() => import('./EmptyImage'));
 export const Radio = React.lazy(() => import('./Radio'));
 export const Box = React.lazy(() => import('./Box'));
 export const CheckBox = React.lazy(() => import('./CheckBox'));
+export const TextArea = React.lazy(() => import('./TextArea'));
+export const Select = React.lazy(() => import('./Select'));

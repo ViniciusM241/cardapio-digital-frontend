@@ -118,7 +118,7 @@ function ItemDetails() {
               <Inline className="mt-40 mb-20" center={breakpoints.xs}>
                 {
                   !selectedItem.imageURL ?
-                    <EmptyImage width={120} height={120} icoSize={4} />
+                    <EmptyImage width={180} height={180} icoSize={4} />
                   :
                     <StyledImg src={selectedItem.imageURL} />
                 }

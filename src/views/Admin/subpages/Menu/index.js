@@ -29,7 +29,7 @@ function Menu() {
       component: ItemBox,
       function: getItems,
       label: 'item',
-      redirect: '/administrativo/cardapio/itens',
+      redirect: '/administrativo/cardapio/items',
     },
     'EXTRAS': {
       component: ExtraBox,
@@ -94,6 +94,8 @@ function Menu() {
                   {
                     React.createElement(itens[itemType].component, {
                       item,
+                      items,
+                      setItems,
                     })
                   }
                 </Col>
