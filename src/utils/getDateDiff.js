@@ -7,6 +7,9 @@ export default function getDateDiff(date) {
   const diff = currentDate.diff(olderDate, 'minutes');
 
   if (diff < 60) {
+    if (diff === 0) {
+      return 'agora';
+    }
     return `há ${diff} minuto${diff > 1 ? 's' : ''}`;
   } else if (diff < 1440) {
     return `há ${Math.ceil(diff / 60)} horas`;

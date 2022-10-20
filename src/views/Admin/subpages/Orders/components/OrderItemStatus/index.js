@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { MdArrowForwardIos } from 'react-icons/md';
 import { LoadingOutlined } from '@ant-design/icons';
 import updateOrderStatus from '../../services/updateOrderStatus';
@@ -7,8 +6,6 @@ import updateOrderStatus from '../../services/updateOrderStatus';
 import { Container, IconWrapper } from './styles';
 
 function OrderItemStatus({ order, updateOrders, ...props }) {
-  const navigate = useNavigate();
-
   const [isLoading, setIsLoading] = useState(false);
 
   const _updateOrderStatus = async () => {

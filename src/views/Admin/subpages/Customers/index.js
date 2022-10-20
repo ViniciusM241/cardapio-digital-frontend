@@ -2,6 +2,7 @@ import React, { useState, useMemo, useEffect } from 'react';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
 import getCustomers from './services/getCustomers';
+import getCustomersCount from './services/getCustomersCount';
 
 import {
   Container,
@@ -13,6 +14,7 @@ import { phone } from '~/utils/masks';
 
 function Customers() {
   const [filters, setFilters] = useState('');
+  const [count, setCount] = useState(5);
   const [customers, setCustomers] = useState([]);
 
   const columns = useMemo(() => [
@@ -46,29 +48,39 @@ function Customers() {
   ], [moment]);
 
   const _getCustomers = async () => {
-    const customers = await getCustomers();
+    const customers = await getCustomers(filters);
 
     setCustomers(customers);
+  };
+
+  const _getCustomersCount = async () => {
+    const count = await getCustomersCount();
+
+    setCount(count);
   };
 
   const onFetchData = ({ order, pageIndex, maxPage }) => {
     const query = [];
 
-    query.push(`_start=${pageIndex * maxPage}&_limit=${maxPage}`);
+    query.push(`offset=${pageIndex * maxPage}&limit=${maxPage}`);
 
     if (order)
-      query.push(`_sort=${order.accessor}&_order=${order.asc ? 'asc' : 'desc'}`);
+      query.push(`sort=${order.accessor || 'name'}&order=${order.asc ? 'asc' : 'desc'}`);
 
     setFilters(query.join('&'));
   };
 
   useEffect(() => {
     _getCustomers();
+  }, [filters]);
+
+  useEffect(() => {
+    _getCustomersCount();
   }, []);
 
   return (
     <Container>
-      <T1>Lista de clientes</T1>
+      <T1 className="mb-10">Lista de clientes</T1>
       <Inline>
         <Table
           data={customers}
@@ -76,7 +88,7 @@ function Customers() {
           onClickRow={() => {}}
           onFetchData={onFetchData}
           maxPage={5}
-          total={5}
+          total={count}
         />
       </Inline>
     </Container>
