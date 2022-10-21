@@ -56,12 +56,23 @@ function MenuPage() {
       toast.success('Dados salvos com sucesso');
 
       const url = generateWhatsMessage(values, res);
-      window.open(url, '_blank');
+      // window.open(url, '_blank');
+      redirect(url);
 
       navigate('/');
     } else {
-      console.log('error');
+      toast.error('Problemas no momento, tente novamente mais tarde');
     }
+  };
+
+  const redirect = (url) => {
+    const a = document.createElement("a");
+    document.body.appendChild(a);
+    a.style = "display: none";
+    a.href = url;
+    a.target = '_blank';
+    a.click();
+    document.body.removeChild(a);
   };
 
   const generateWhatsMessage = (values, response) => {
