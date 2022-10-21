@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import deleteItemById from '../../services/deleteItemById';
 
 import { StyledImg, LimitedP } from './styles';
 
@@ -14,11 +15,14 @@ import {
 import formatPrice from '~/utils/formatPrice';
 import ActionButtons from '../ActionButtons';
 
-function ItemBox({ item }) {
+function ItemBox({ item, items, setItems }) {
   const navigate = useNavigate();
 
   const onDelete = () => {
+    const newItems = items.filter(x => x.id !== item.id);
 
+    setItems(newItems);
+    deleteItemById(item.id);
   };
 
   const onEdit = () => {
@@ -26,7 +30,7 @@ function ItemBox({ item }) {
   };
 
   return (
-    <Box onClick={onEdit}>
+    <Box>
       <Inline>
         <Col cols={6} style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
           <T1 style={{ fontWeight: '400', fontSize: '1.8rem' }}>Nome</T1>

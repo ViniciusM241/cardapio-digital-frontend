@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Container, StyledTable, Rows } from './styles';
+import { Container, StyledTable, Rows, EmptyTable } from './styles';
 
 import Header from './components/Header';
 import Row from './components/Row';
@@ -54,7 +54,14 @@ function Table({
         </StyledTable>
       </Container>
       {
-        !!total && (
+        !data.length && (
+          <EmptyTable>
+            Nenhum item encontrado
+          </EmptyTable>
+        )
+      }
+      {
+        !!total && !!data.length && (
           <Pagination
             maxPage={maxPage}
             setFilters={setFilters}

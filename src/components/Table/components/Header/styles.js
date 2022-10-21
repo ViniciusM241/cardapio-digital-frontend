@@ -2,8 +2,8 @@ import styled from "styled-components";
 import colors from "~/utils/colors";
 
 export const Thead = styled.thead`
-  background-color: ${colors.LIGHT_BLUE};
-  color: ${colors.WHITE};
+  background-color: ${colors.GREEN};
+  color: #FFF;
 `;
 
 export const Tr = styled.tr`

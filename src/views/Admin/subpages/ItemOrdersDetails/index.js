@@ -64,7 +64,7 @@ function ItemOrdersDetails() {
               <Inline className="mt-40 mb-20" center={breakpoints.xs}>
                 {
                   !item.item?.imageURL ?
-                    <EmptyImage width={120} height={120} icoSize={4} />
+                    <EmptyImage width={180} height={180} icoSize={4} />
                   :
                     <StyledImg src={item.item?.imageURL} />
                 }

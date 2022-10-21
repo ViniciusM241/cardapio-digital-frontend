@@ -10,15 +10,21 @@ function Pagination({
   pageIndex,
   total,
 }) {
-  const totalPage = total / maxPage;
+  const totalPage = Math.ceil(total / maxPage);
+  const maxToShow = 2;
+  let buttonsQty = [...Array(maxToShow).keys()];
 
-  if (pageIndex + 1 > totalPage) {
-    pageIndex = totalPage - 1;
+  if (totalPage < maxToShow) {
+    buttonsQty = [];
   }
 
-  const maxToShow = 2;
-  const plus = pageIndex + maxToShow >= totalPage ? pageIndex + maxToShow > totalPage ? maxToShow : pageIndex : 1;
-  const buttonsQty = [...Array(totalPage).keys()].map(x => x + plus);
+  if (totalPage > maxToShow) {
+    buttonsQty = [...Array(totalPage).keys()];
+  }
+
+  if (pageIndex + 1 > maxToShow) {
+    buttonsQty = buttonsQty.map(x => x + pageIndex - 1);
+  }
 
   const handleChangeIndex = (index) => {
     setFilters(state => ({
@@ -30,7 +36,7 @@ function Pagination({
   return (
     <Inline className="mt-20" center>
       {
-        pageIndex +1 >= maxToShow && (
+        pageIndex !== 0 && (
           <LeftOutlined
             style={{
               color: colors.LIGHT_BLUE,
@@ -45,10 +51,10 @@ function Pagination({
           <Button
             className="ml-10"
             key={index}
-            active={index === pageIndex + 1}
-            onClick={() => handleChangeIndex(index -1)}
+            active={index === pageIndex}
+            onClick={() => handleChangeIndex(index)}
           >
-            {index}
+            {index + 1}
           </Button>
         ))
       }
@@ -59,15 +65,19 @@ function Pagination({
           </span>
         )
       }
-      <Button
-        className="ml-10"
-        active={pageIndex + 1 === totalPage}
-        onClick={() => handleChangeIndex(totalPage -1)}
-      >
-        {totalPage}
-      </Button>
       {
-        pageIndex +1 < totalPage && (
+        buttonsQty.length !== maxToShow && pageIndex + 1 !== totalPage && (
+          <Button
+            className="ml-10"
+            active={pageIndex + 1 === totalPage}
+            onClick={() => handleChangeIndex(totalPage -1)}
+          >
+            {totalPage}
+          </Button>
+        )
+      }
+      {
+        pageIndex !== totalPage - 1 && (
           <RightOutlined
             className="ml-10"
             style={{

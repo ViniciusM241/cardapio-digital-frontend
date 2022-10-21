@@ -127,7 +127,7 @@ function ItemOrderedReview() {
               <Inline className="mt-40 mb-20" center>
                 {
                   !selectedItem.item.imageURL ?
-                    <EmptyImage width={120} height={120} icoSize={4} />
+                    <EmptyImage width={180} height={180} icoSize={4} />
                   :
                     <StyledImg src={selectedItem.item.imageURL} />
                 }

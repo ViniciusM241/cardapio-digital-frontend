@@ -57,7 +57,7 @@ function OrdersDetails() {
               order.status.value != 'FINISHED' && (
                 <Col cols={3} xs={7}>
                   <Inline right>
-                    <OrderItemStatus updateOrders={() => {}} order={order} />
+                    <OrderItemStatus updateOrders={() => navigate(`/administrativo/pedidos/${order.id}`)} order={order} />
                   </Inline>
                 </Col>
               )

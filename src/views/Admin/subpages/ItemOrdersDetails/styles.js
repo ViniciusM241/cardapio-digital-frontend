@@ -19,13 +19,13 @@ export const StyledMdKeyboardArrowLeft = styled(MdKeyboardArrowLeft)`
 `;
 
 export const StyledImg = styled.div`
-  background-image: ${props => props.src};
+  background-image: url('${props => props.src}');
   background-position: center;
   background-size: contain;
   background-repeat: no-repeat;
 
-  width: 120px;
-  height: 120px;
+  width: 180px;
+  height: 180px;
   border-radius: 5px;
 `;
 

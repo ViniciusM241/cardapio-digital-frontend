@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import deleteCategoryById from '../../services/deleteCategoryById';
 
 import {
   Box,
@@ -10,11 +11,14 @@ import {
 } from '~/components';
 import ActionButtons from '../ActionButtons';
 
-function CategoryBox({ item }) {
+function CategoryBox({ item, items, setItems }) {
   const navigate = useNavigate();
 
   const onDelete = () => {
+    const newItems = items.filter(x => x.id !== item.id);
 
+    setItems(newItems);
+    deleteCategoryById(item.id);
   };
 
   const onEdit = () => {
@@ -22,7 +26,7 @@ function CategoryBox({ item }) {
   };
 
   return (
-    <Box onClick={onEdit}>
+    <Box>
       <Inline>
         <Col cols={8} style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
           <T1 style={{ fontWeight: '400', fontSize: '1.8rem' }}>Nome</T1>

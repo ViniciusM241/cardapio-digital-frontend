@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import deleteExtraById from '../../services/deleteExtraById';
 
 import {
   Box,
@@ -11,11 +12,14 @@ import {
 import formatPrice from '~/utils/formatPrice';
 import ActionButtons from '../ActionButtons';
 
-function ExtraBox({ item }) {
+function ExtraBox({ item, items, setItems }) {
   const navigate = useNavigate();
 
   const onDelete = () => {
+    const newItems = items.filter(x => x.id !== item.id);
 
+    setItems(newItems);
+    deleteExtraById(item.id);
   };
 
   const onEdit = () => {
@@ -23,7 +27,7 @@ function ExtraBox({ item }) {
   };
 
   return (
-    <Box onClick={onEdit}>
+    <Box>
       <Inline>
         <Col cols={8} style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
           <T1 style={{ fontWeight: '400', fontSize: '1.8rem' }}>Nome</T1>

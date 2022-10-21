@@ -2,7 +2,7 @@ import styled from "styled-components";
 import colors from "~/utils/colors";
 
 export const Tr = styled.tr`
-  background-color: ${colors.LIGHT_GRAY};
+  background-color: #FFF;
   cursor: pointer;
   transition: background-color .2s ease;
 

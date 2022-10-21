@@ -128,7 +128,7 @@ function Form({
       };
     }
 
-    if (child.props?.name && (child.props?.type === 'radio' || child.props?.type === 'checkbox' )) {
+    if (child.props?.name && (child.props?.type === 'radio' || child.props?.type === 'checkbox' || child.props?.type === 'select' )) {
       newChild.props = {
         ...child.props,
         values: values,
