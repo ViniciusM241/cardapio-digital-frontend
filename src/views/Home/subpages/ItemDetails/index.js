@@ -17,6 +17,7 @@ import {
   Line,
   Button,
   Input,
+  Pre,
 } from '~/components';
 import ExtraItem from './components/ExtraItem';
 
@@ -130,7 +131,7 @@ function ItemDetails() {
                   <T1 style={{ fontWeight: '400' }}>{selectedItem.name}</T1>
                 </Col>
                 <Col cols={9} xs={12}>
-                  <P className='mt-10'>{selectedItem.description}</P>
+                  <Pre className='mt-10'>{selectedItem.description}</Pre>
                 </Col>
                 <Col cols={9} xs={12}>
                   <P style={{ fontWeight: '600' }} className='mt-10'>{formatPrice(selectedItem.value)}</P>

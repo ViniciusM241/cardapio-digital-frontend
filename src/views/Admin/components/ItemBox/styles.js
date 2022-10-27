@@ -21,7 +21,7 @@ height: 66px;
 
 background-image: url(${props => props.src});
 background-position: center;
-background-size: contain;
+background-size: cover;
 border-radius: 5px;
 `;
 

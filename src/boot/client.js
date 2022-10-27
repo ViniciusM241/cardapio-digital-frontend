@@ -2,7 +2,7 @@ import axios from 'axios';
 import { getToken, removeToken } from './auth';
 
 const client = axios.create({
-  baseURL: process.env.REACT_APP_API_BASE_URL,
+  baseURL: process.env.REACT_APP_API_BASE_URL + '/api',
 });
 
 client.interceptors.request.use((config) => {
@@ -22,8 +22,11 @@ client.interceptors.response.use((response) => response,
 
     if (err?.response?.status === 401) {
       alert('Login necessário');
+
+      const backTo = window.location.pathname;
+
       removeToken();
-      window.location.href = '/login';
+      window.location.href = `/login?redirectTo=${backTo}`;
     }
 
     return err?.response;
