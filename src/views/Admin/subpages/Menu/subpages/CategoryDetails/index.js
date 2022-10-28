@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import getCategoriesById from '../../services/getCategoriesById';
 import updateCategory from '../../services/updateCategory';
@@ -57,6 +57,10 @@ function CategoryDetails() {
     }
   }, [id]);
 
+  const initialValues = useMemo(() => ({
+    name: category.name || '',
+  }), []);
+
   return (
     <Container>
       <Inline>
@@ -69,9 +73,7 @@ function CategoryDetails() {
       </Inline>
       <Form
         className="mt-40"
-        initialValues={{
-          name: category.name || '',
-        }}
+        initialValues={initialValues}
         onSubmit={handleSubmit}
         validationSchema={categorySchema}
       >

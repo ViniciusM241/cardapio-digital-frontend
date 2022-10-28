@@ -13,4 +13,5 @@ export const Wrapper = styled.div`
 
   position: relative;
   z-index: 10;
+  min-height: 100vh;
 `;

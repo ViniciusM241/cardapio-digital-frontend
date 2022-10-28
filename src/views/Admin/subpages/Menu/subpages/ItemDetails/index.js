@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import getItemById from '../../services/getItemById';
 import updateItem from '../../services/updateItem';
@@ -122,6 +122,14 @@ function ItemDetails() {
     _getCategories();
   }, []);
 
+  const initialValues = useMemo(() => ({
+    name: item.name || '',
+    description: item.description || '',
+    value: item.value ? currency(item.value) : '',
+    categoryId: item.categoryId || '',
+    extraItems: item.extras ? item.extras.map(x => x.id) : [],
+  }), []);
+
   return (
     <Container>
       <Inline>
@@ -147,13 +155,7 @@ function ItemDetails() {
         </Inline>
       </Col>
       <Form
-        initialValues={{
-          name: item.name || '',
-          description: item.description || '',
-          value: item.value ? currency(item.value) : '',
-          categoryId: item.categoryId || '',
-          extraItems: item.extras ? item.extras.map(x => x.id) : [],
-        }}
+        initialValues={initialValues}
         onSubmit={handleSubmit}
         validationSchema={itemSchema}
       >
