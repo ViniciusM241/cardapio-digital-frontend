@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import getExtraById from '../../services/getExtraById';
 import updateExtra from '../../services/updateExtra';
@@ -60,6 +60,11 @@ function ExtraDetails() {
     }
   }, [id]);
 
+  const initialValues = useMemo(() => ({
+    name: extra.name || '',
+    value: extra.value ? currency(extra.value) : '',
+  }), []);
+
   return (
     <Container>
       <Inline>
@@ -72,10 +77,7 @@ function ExtraDetails() {
       </Inline>
       <Form
         className="mt-40"
-        initialValues={{
-          name: extra.name || '',
-          value: extra.value ? currency(extra.value) : '',
-        }}
+        initialValues={initialValues}
         onSubmit={handleSubmit}
         validationSchema={extraSchema}
       >

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import getOrderById from './services/getOrderById';
-import { phone } from '~/utils/masks';
+import { phone, currency } from '~/utils/masks';
 
 import { StyledMdKeyboardArrowLeft } from './styles';
 
@@ -74,7 +74,7 @@ function OrdersDetails() {
             district: order.district,
             deliveryMethod: order.deliveryMethod,
             paymentMethod: order.paymentMethod,
-            change: order.change,
+            change: order.change ? currency(order.change) : '',
           }}
         >
           {

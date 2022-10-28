@@ -21,7 +21,7 @@ export const StyledMdKeyboardArrowLeft = styled(MdKeyboardArrowLeft)`
 export const StyledImg = styled.div`
   background-image: url('${props => props.src}');
   background-position: center;
-  background-size: contain;
+  background-size: cover;
   background-repeat: no-repeat;
 
   width: 180px;

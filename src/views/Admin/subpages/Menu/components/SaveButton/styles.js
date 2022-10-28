@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { MdSave } from 'react-icons/md';
+import colors from '~/utils/colors';
 
 export const Container = styled.button`
   width: 60px;
@@ -7,6 +8,7 @@ export const Container = styled.button`
   background-color: #FFF;
   border: none;
   outline: none;
+  color: ${colors.TEXT};
 
   display: flex;
   align-items: center;

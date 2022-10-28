@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { setToken } from '~/boot/auth';
 import useBreakpoints from '~/hooks/useBreakpoints';
 import { useDispatch, useSelector } from 'react-redux';
@@ -21,6 +21,7 @@ import {
 
 function Login() {
   const dispatch = useDispatch();
+  const location = useLocation();
   const isLoading = useSelector(state => state.login.isLoading);
   const navigate = useNavigate();
   const breakpoints = useBreakpoints();
@@ -42,7 +43,13 @@ function Login() {
         }
 
         setToken(res.data.token);
-        navigate('/administrativo');
+        if (location.search) {
+          const backTo = location.search.replace('?redirectTo=', '');
+
+          navigate(backTo);
+        } else {
+          navigate('/administrativo');
+        }
       }
     ));
   };

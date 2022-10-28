@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import useBreakpoints from '~/hooks/useBreakpoints';
@@ -56,12 +56,23 @@ function MenuPage() {
       toast.success('Dados salvos com sucesso');
 
       const url = generateWhatsMessage(values, res);
-      window.open(url, '_blank');
+      console.log(url)
+      // window.open(url, '_blank');
+      redirect(url);
 
       navigate('/');
     } else {
-      console.log('error');
+      toast.error('Problemas no momento, tente novamente mais tarde');
     }
+  };
+
+  const redirect = (url) => {
+    const a = document.createElement("a");
+    document.body.appendChild(a);
+    a.style = "display: none";
+    a.href = url;
+    a.click();
+    document.body.removeChild(a);
   };
 
   const generateWhatsMessage = (values, response) => {
@@ -72,13 +83,8 @@ function MenuPage() {
 ${moment().format('DD/MM HH:mm')}
 
 *📄Pedido:*
-${cart.itemsOrdered.map(item => `
-${item.quantity}x ${item.item.name} *${formatPrice(item.total)}*
-${item.extras.length ? 'Adicionais:' : ''}
-${item.extras.length ? item.extras.map(extra => `${extra.extraItemsOrdered.quantity}x ${extra.name} *${formatPrice(extra.value)}*`).join('\n') : '' }
-
+${cart.itemsOrdered.map(item => `${item.quantity}x ${item.item.name} *${formatPrice(item.total)}*${item.extras.length ? '\n*Adicionais*:\n' : ''}${item.extras.length ? item.extras.map(extra => `${extra.extraItemsOrdered.quantity}x ${extra.name} *${formatPrice(extra.value)}*`).join('\n') : '' }
 `).join('\n')}
-
 *👤Cliente:*
 ${values.fullName}
 
@@ -86,7 +92,7 @@ ${values.fullName}
 ${values.deliveryMethod === 'DELIVERY' ? `*Total com entrega:* ${formatPrice((parseFloat(cart.total) + parseFloat(response.params.deliveryFee || 5)).toFixed(2))}` : ''}
 
 *💰Pagamento:*
-${response.params.paymentMethods[values.paymentMethod].label}${values.paymentMethod === 'CASH' ? `, troco para ${formatPrice(values.change)}` : ''}
+${response.params.paymentMethods[values.paymentMethod].label}${values.paymentMethod === 'CASH' ? `, troco para R$ ${values.change}` : ''}
     `;
 
     return `${API_URL}&text=${encodeURIComponent(mensagem)}`;
@@ -101,6 +107,19 @@ ${response.params.paymentMethods[values.paymentMethod].label}${values.paymentMet
     setValue({ target: { value: address.district }}, 'district');
   }
 
+  const initialValues = useMemo(() => ({
+    fullName: customer.name,
+    phone: customer.phone ? phone(customer.phone.substring(2)) : '',
+    customerId: customer.id,
+    zipcode: '',
+    number: '',
+    address: '',
+    district: '',
+    deliveryMethod: '',
+    paymentMethod: '',
+    change: '',
+  }), [customer]);
+
   return (
     <>
       <Container>
@@ -113,18 +132,7 @@ ${response.params.paymentMethods[values.paymentMethod].label}${values.paymentMet
           </Col>
         </Inline>
         <Form
-          initialValues={{
-            fullName: customer.name,
-            phone: customer.phone ? phone(customer.phone.substring(2)) : '',
-            customerId: customer.id,
-            zipcode: '',
-            number: '',
-            address: '',
-            district: '',
-            deliveryMethod: '',
-            paymentMethod: '',
-            change: '',
-          }}
+          initialValues={initialValues}
           onSubmit={handleSubmit}
           validationSchema={orderSchema}
         >

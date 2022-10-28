@@ -8,7 +8,7 @@ export const StyledImg = styled.div`
   background-image: url('${props => props.src}');
   background-position: center;
   background-repeat: no-repeat;
-  background-size: contain;
+  background-size: cover;
 `;
 
 export const LimitedP = styled(P)`

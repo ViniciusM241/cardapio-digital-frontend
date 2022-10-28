@@ -14,6 +14,7 @@ import {
   P,
   Line,
   Input,
+  Pre,
 } from '~/components';
 import ExtraBox from '../../components/ExtraBox';
 
@@ -76,7 +77,7 @@ function ItemOrdersDetails() {
                   <T1 style={{ fontWeight: '400' }}>{item.item?.name}</T1>
                 </Col>
                 <Col cols={9} xs={12}>
-                  <P className='mt-10'>{item.item?.description}</P>
+                  <Pre className='mt-10'>{item.item?.description}</Pre>
                 </Col>
                 <Col cols={9} xs={12}>
                   <P style={{ fontWeight: '600' }} className='mt-10'>{formatPrice(item.item?.value)}</P>

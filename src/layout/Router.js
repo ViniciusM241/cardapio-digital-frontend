@@ -45,6 +45,8 @@ function CustomRouter () {
                   };
 
                   const redirect = (to) => {
+                    window.location.href = to;
+
                     return {
                       element: <Navigate to={to} {...props} />,
                       success: false,

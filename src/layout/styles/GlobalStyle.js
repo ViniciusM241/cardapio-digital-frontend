@@ -13,6 +13,7 @@ const GlobalStyle = createGlobalStyle`
     min-height: 100vh;
     font-weight: 600;
     font-size: .9rem;
+    padding-bottom: 50px;
     color: ${colors.TEXT};
     font-family: 'Roboto', sans-serif;
   }

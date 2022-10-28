@@ -25,12 +25,12 @@ client.interceptors.response.use((response) => response,
     if (err?.response?.status === 401) {
       if (!alertThrowed) {
         alertThrowed = true;
-
         alert('Login necessário');
 
-        removeToken();
+        const backTo = window.location.pathname;
 
-        window.location.href = '/login';
+        removeToken();
+        window.location.href = `/login?redirectTo=${backTo}`;
       }
     }
 
