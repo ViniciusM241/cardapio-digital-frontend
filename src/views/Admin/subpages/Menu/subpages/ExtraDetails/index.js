@@ -5,6 +5,7 @@ import updateExtra from '../../services/updateExtra';
 import createExtra from '../../services/createExtra';
 import { toast } from 'react-toastify';
 import extraSchema from '~/utils/validations/extraSchema';
+import useBreakpoints from '~/hooks/useBreakpoints';
 
 import { StyledMdKeyboardArrowLeft } from './styles';
 
@@ -22,6 +23,7 @@ import { currency } from '~/utils/masks';
 function ExtraDetails() {
   const location = useLocation();
   const navigate = useNavigate();
+  const breakpoints = useBreakpoints();
   const id = location.pathname.replace(/^(\D)+/, '');
 
   const [extra, setExtra] = useState({});

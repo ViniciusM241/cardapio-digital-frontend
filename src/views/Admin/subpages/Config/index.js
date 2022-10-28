@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import getConfigs from './services/getConfigs';
+import disconnect from './services/disconnect';
+
+import { ColoredStatus, Link } from './styles';
 
 import {
   Container,
   Inline,
   P,
+  Col,
 } from '~/components';
 import QRCode from 'react-qr-code';
-import colors from '~/utils/colors';
 
 function Config() {
   const [configs, setConfigs] = useState({});
@@ -32,18 +35,25 @@ function Config() {
     <Container>
       <Inline center>
         <P>
-          Status:
-          <span
-            style={{ color: configs.status === 'OFFLINE' ? colors.RED : colors.GREEN }}
-          >
+          Status:&nbsp;
+          <ColoredStatus online={configs.status != 'OFFLINE'}>
             {configs.status || 'OFFLINE'}
-          </span>
+          </ColoredStatus>
+          {
+            configs.status === 'CONNECTED' && (
+              <Link onClick={disconnect} className='ml-10'>Desconectar</Link>
+            )
+          }
         </P>
       </Inline>
       {
-        configs.qr && (
+        configs.qr && configs.status === 'OFFLINE' && (
           <Inline center className="mt-20">
-            <P>Código QR:</P>
+            <Col cols={12}>
+              <Inline center>
+                <P>Código QR:</P>
+              </Inline>
+            </Col>
             <QRCode value={configs.qr} className="mt-10" />
           </Inline>
         )

@@ -33,6 +33,10 @@ const reducer = handleActions(
       ...state,
       profile: data,
     }),
+    [types.SET_PROFILE]: (state, { payload: { data } }) => ({
+      ...state,
+      profile: data,
+    }),
   },
   INITIAL_STATE
 );

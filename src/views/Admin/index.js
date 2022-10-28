@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import useBreakpoints from '~/hooks/useBreakpoints';
 import getReports from './services/getReports';
+import ptBr from 'date-fns/locale/pt-BR';
 
 import "react-datepicker/dist/react-datepicker.css";
 import { DatePickerStyles } from './styles';
 import { MdCalendarToday } from 'react-icons/md';
+import { registerLocale } from 'react-datepicker';
 
 import {
   Chart as ChartJS,
@@ -34,6 +36,8 @@ import Box from './components/Box';
 import DatePicker from "react-datepicker";
 import colors from '~/utils/colors';
 import moment from 'moment';
+
+registerLocale("ptBr", ptBr);
 
 ChartJS.register(
   CategoryScale,
@@ -156,6 +160,7 @@ function AdminPage() {
       <Col cols={12}>
         <Inline className='mb-10' right>
           <DatePicker
+            locale="ptBr"
             selected={startDate}
             dateFormat="dd/MM/yyyy"
             onChange={(date) => setStartDate(date)}

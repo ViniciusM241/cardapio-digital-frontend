@@ -3,4 +3,5 @@ import async from '~/utils/async';
 
 export default createTypes('ADMIN', [
   ...async('GET_PROFILE'),
+  'SET_PROFILE',
 ]);

@@ -19,3 +19,7 @@ export function getProfile() {
     }
   };
 }
+
+export function setProfile(profile) {
+  return { type: types.SET_PROFILE, payload: { data: profile } };
+}

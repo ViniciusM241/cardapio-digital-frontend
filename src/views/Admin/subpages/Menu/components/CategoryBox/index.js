@@ -15,10 +15,12 @@ function CategoryBox({ item, items, setItems }) {
   const navigate = useNavigate();
 
   const onDelete = () => {
-    const newItems = items.filter(x => x.id !== item.id);
+    if (confirm('Você realmente deseja excluir essa categoria?')) {
+      const newItems = items.filter(x => x.id !== item.id);
 
-    setItems(newItems);
-    deleteCategoryById(item.id);
+      setItems(newItems);
+      deleteCategoryById(item.id);
+    }
   };
 
   const onEdit = () => {

@@ -16,10 +16,12 @@ function ExtraBox({ item, items, setItems }) {
   const navigate = useNavigate();
 
   const onDelete = () => {
-    const newItems = items.filter(x => x.id !== item.id);
+    if (confirm('Você realmente deseja excluir esse adicional?')) {
+      const newItems = items.filter(x => x.id !== item.id);
 
-    setItems(newItems);
-    deleteExtraById(item.id);
+      setItems(newItems);
+      deleteExtraById(item.id);
+    }
   };
 
   const onEdit = () => {

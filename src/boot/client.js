@@ -5,6 +5,8 @@ const client = axios.create({
   baseURL: process.env.REACT_APP_API_BASE_URL,
 });
 
+let alertThrowed = false;
+
 client.interceptors.request.use((config) => {
   const token = getToken();
 
@@ -21,9 +23,15 @@ client.interceptors.response.use((response) => response,
       throw err;
 
     if (err?.response?.status === 401) {
-      alert('Login necessário');
-      removeToken();
-      window.location.href = '/login';
+      if (!alertThrowed) {
+        alertThrowed = true;
+
+        alert('Login necessário');
+
+        removeToken();
+
+        window.location.href = '/login';
+      }
     }
 
     return err?.response;

@@ -11,6 +11,7 @@ const CategoryDetails = React.lazy(() => import('./subpages/Menu/subpages/Catego
 const ExtraDetails = React.lazy(() => import('./subpages/Menu/subpages/ExtraDetails'));
 const ItemDetails = React.lazy(() => import('./subpages/Menu/subpages/ItemDetails'));
 const Customers = React.lazy(() => import('./subpages/Customers'));
+const Profile = React.lazy(() => import('./subpages/Profile'));
 
 export default [
   {
@@ -124,6 +125,15 @@ export default [
   {
     path: '/administrativo/clientes',
     element: Customers,
+    exact: true,
+    title: 'Perrón! Cardápio - Admin',
+    middlewares: [
+      isLogged,
+    ],
+  },
+  {
+    path: '/administrativo/perfil',
+    element: Profile,
     exact: true,
     title: 'Perrón! Cardápio - Admin',
     middlewares: [

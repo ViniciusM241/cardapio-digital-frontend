@@ -2,7 +2,7 @@ import React from 'react';
 import menus from "../../menus";
 
 import { Container, MenuContainer } from './styles';
-import { MdLogout } from 'react-icons/md';
+import { MdLogout, MdPerson } from 'react-icons/md';
 
 import {
   Inline,
@@ -16,6 +16,13 @@ const logoutMenu = {
   to: '/administrativo/sair',
   name: 'Sair',
   icon: MdLogout,
+};
+
+const profileMenu = {
+  path: '/administrativo/perfil',
+  to: '/administrativo/perfil',
+  name: 'Perfil',
+  icon: MdPerson,
 };
 
 function MobileMenu({ isOpened, toggleMenuOpened }) {
@@ -35,6 +42,8 @@ function MobileMenu({ isOpened, toggleMenuOpened }) {
                 </React.Fragment>
               ))
             }
+            <MenuItem menu={profileMenu} toggleMenuOpened={toggleMenuOpened} />
+            <Line />
             <MenuItem menu={logoutMenu} toggleMenuOpened={toggleMenuOpened} />
             <Line />
           </Inline>

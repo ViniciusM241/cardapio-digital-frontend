@@ -19,10 +19,12 @@ function ItemBox({ item, items, setItems }) {
   const navigate = useNavigate();
 
   const onDelete = () => {
-    const newItems = items.filter(x => x.id !== item.id);
+    if (confirm('Você realmente deseja excluir esse item?')) {
+      const newItems = items.filter(x => x.id !== item.id);
 
-    setItems(newItems);
-    deleteItemById(item.id);
+      setItems(newItems);
+      deleteItemById(item.id);
+    }
   };
 
   const onEdit = () => {

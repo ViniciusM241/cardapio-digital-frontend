@@ -5,7 +5,7 @@ import { LoadingOutlined } from '@ant-design/icons';
 function SuspenseLoading() {
   return (
     <Container>
-      <LoadingOutlined style={{ fontSize: '2rem' }} />
+      <LoadingOutlined style={{ fontSize: '3rem' }} />
     </Container>
   );
 }

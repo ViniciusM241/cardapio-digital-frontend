@@ -71,7 +71,7 @@ function ItemOrdersDetails() {
               </Inline>
             </Col>
             <Col cols={9} xs={12}>
-              <Inline>
+              <Inline className={breakpoints.xs ? '' : 'ml-20'} >
                 <Col cols={9} xs={12}>
                   <T1 style={{ fontWeight: '400' }}>{item.item?.name}</T1>
                 </Col>

@@ -5,9 +5,14 @@ import { getProfile } from '~/views/Admin/store/actions';
 import useOutsideClick from '~/hooks/useOutsideClick';
 
 import { Wrapper, Collapse, CollapseItem, Item } from './styles';
-import { MdLogout } from 'react-icons/md';
+import { MdLogout, MdPerson } from 'react-icons/md';
 
 const menus = [
+  {
+    name: 'Perfil',
+    to: '/administrativo/perfil',
+    icon: MdPerson,
+  },
   {
     name: 'Sair',
     to: '/sair',
@@ -34,6 +39,11 @@ function Profile() {
     setIsOpened(!isOpened);
   };
 
+  const redirect = (to) => {
+    navigate(to);
+    toggleIsOpened();
+  };
+
   return (
     <Wrapper ref={wrapperRef}>
       <Item className='ml-10' onClick={toggleIsOpened}>
@@ -44,7 +54,7 @@ function Profile() {
           <Collapse>
             {
               menus.map((menu, index) => (
-                <CollapseItem key={index} onClick={() => navigate(menu.to)}>
+                <CollapseItem key={index} onClick={() => redirect(menu.to)}>
                   {
                     React.createElement(menu.icon, {
                       className: 'mr-10',
