@@ -180,7 +180,7 @@ function AdminPage() {
           <T1 style={{ color: colors.RED, fontSize: '5rem', fontWeight: '400' }}>
             {
               reports?.avgOrderTime ?
-                reports.avgOrderTime >= 60 ? `${reports.avgOrderTime / 60}h` : `${reports.avgOrderTime}m`
+                reports.avgOrderTime >= 60 ? `${(reports.avgOrderTime / 60).toFixed(2)}h` : `${Number(reports.avgOrderTime).toFixed(2)}m`
               :
                 '00m'
             }

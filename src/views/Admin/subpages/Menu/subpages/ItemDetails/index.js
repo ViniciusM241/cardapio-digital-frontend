@@ -128,7 +128,7 @@ function ItemDetails() {
     value: item.value ? currency(item.value) : '',
     categoryId: item.categoryId || '',
     extraItems: item.extras ? item.extras.map(x => x.id) : [],
-  }), []);
+  }), [item]);
 
   return (
     <Container>

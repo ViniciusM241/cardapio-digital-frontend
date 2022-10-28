@@ -59,7 +59,7 @@ function CategoryDetails() {
 
   const initialValues = useMemo(() => ({
     name: category.name || '',
-  }), []);
+  }), [category]);
 
   return (
     <Container>

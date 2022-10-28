@@ -63,7 +63,7 @@ function ExtraDetails() {
   const initialValues = useMemo(() => ({
     name: extra.name || '',
     value: extra.value ? currency(extra.value) : '',
-  }), []);
+  }), [extra]);
 
   return (
     <Container>
