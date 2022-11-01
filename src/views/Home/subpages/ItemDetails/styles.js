@@ -60,6 +60,7 @@ export const ActionButton = styled.button`
   border-radius: 5px;
   color: #FFF;
   font-weight: bold;
+  line-height: 1;
 
   cursor: pointer;
 `;

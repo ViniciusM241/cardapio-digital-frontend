@@ -20,6 +20,7 @@ export const Container = styled.button`
   position: fixed;
   bottom: 20px;
   right: 20px;
+  cursor: pointer;
 `;
 
 export const Ico = styled(MdSave)`
