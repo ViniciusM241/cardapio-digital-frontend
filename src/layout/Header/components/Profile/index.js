@@ -15,7 +15,7 @@ const menus = [
   },
   {
     name: 'Sair',
-    to: '/sair',
+    to: '/administrativo/sair',
     icon: MdLogout,
   },
 ];

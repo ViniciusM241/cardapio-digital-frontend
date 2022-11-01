@@ -125,7 +125,7 @@ function ItemDetails() {
                 }
               </Inline>
             </Col>
-            <Col cols={9} xs={12}>
+            <Col cols={9} xs={12} className="ml-20">
               <Inline>
                 <Col cols={9} xs={12}>
                   <T1 style={{ fontWeight: '400' }}>{selectedItem.name}</T1>
