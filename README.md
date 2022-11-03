@@ -1,12 +1,18 @@
-# Teste Quero2Pay
-## App criado para o teste para a vaga de React Pleno na empresa Quero2Pay
+# Digital Menu
+## App developed with ReactJS and NodeJS
 
-🚀 - [Acesso ao deploy](https://viniciusmelo.herokuapp.com/login)
-✨ - [Acesso ao layout da UI utilizada](https://www.figma.com/file/B8xPw4CYWqJNCEt8z6uX6d/Q2-Teste?node-id=0%3A1)
+🚀 - [Deploy link](https://viniciusmelo.herokuapp.com/login)
+✨ - [UI access](https://www.figma.com/file/1MBU9FCkpyeh0xMv9HukzE/SENAI-Perron-Tex-Mex?node-id=0%3A1)
 
-App responsivo com login, desenvolvido para consumir uma API utilizando a lib `json-server` e listar e possibilitar a alteração dos cadastros de contas bancárias dos clientes cadastrados.
+Mobile first digital menu developed for a restaurant. Their customer can be up to date with their orders through WhatsApp messenger.
+Users can order by the app and receive messages of thei orders updates.
 
-### Acesso
+### Menu page
+![https://github.com/ViniciusM241/readme-images/tree/main/cardapio-digital/animation.gif?raw=true](https://github.com/ViniciusM241/readme-images/blob/main/cardapio-digital/animation.gif)
+### Admin page
+![https://github.com/ViniciusM241/readme-images/tree/main/cardapio-digital/animation.gif?raw=true](https://github.com/ViniciusM241/readme-images/blob/main/cardapio-digital/animation2.gif)
 
-- Nome de usuário: admin
-- Senha: 123
+# Development
+- The application was developed with ReactJS on front-end and NodeJS on back-end.
+- The DataBase used was MySQL2.
+- To send messages through WhatsApp messenger was used [whatsapp-web.js](https://wwebjs.dev/) lib.
