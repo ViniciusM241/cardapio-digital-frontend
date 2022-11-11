@@ -41,7 +41,7 @@ function MenuPage() {
   }, [cart]);
 
   const handleSubmit = async ({ values }) => {
-    if (parseFloat(cart.total) < 10 ) {
+    if (parseFloat(cart.total) <= 0 ) {
       return toast.error('Valor mínimo não atingido');
     }
 

@@ -21,12 +21,12 @@ function Head() {
         </Row>
       </Col>
       <Col className="ml-10" cols={7}>
-        <Row>
+        {/* <Row>
           <MdShoppingBag style={{ color: colors.RED, fontSize: '1.3rem' }} />
           <P className="ml-10s">
             Pedido mínimo de <span style={{ whiteSpace: 'nowrap', fontSize: 'inherit' }}>R$ 10,00</span>
           </P>
-        </Row>
+        </Row> */}
       </Col>
     </>
   );
