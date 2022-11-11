@@ -94,7 +94,7 @@ ${cart.itemsOrdered.map(item => `${item.quantity}x ${item.item.name} *${formatPr
 ${values.fullName}
 
 *${values.deliveryMethod === 'DELIVERY' ? 'Subtotal' : 'Total'}:* ${formatPrice(cart.total)}
-${values.deliveryMethod === 'DELIVERY' ? `*Total com entrega:* ${formatPrice((parseFloat(cart.total) + parseFloat(response.params.deliveryFee || 5)).toFixed(2))}` : ''}
+${values.deliveryMethod === 'DELIVERY' ? `*Total com entrega:* ${formatPrice((parseFloat(cart.total) + parseFloat(response.params.deliveryFee || 5)).toFixed(2))}` : '*Retirada*'}
 
 *💰Pagamento:*
 ${response.params.paymentMethods[values.paymentMethod].label}${values.paymentMethod === 'CASH' ? `, troco para R$ ${values.change}` : ''}
