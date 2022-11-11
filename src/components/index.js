@@ -20,3 +20,4 @@ export const CheckBox = React.lazy(() => import('./CheckBox'));
 export const TextArea = React.lazy(() => import('./TextArea'));
 export const Select = React.lazy(() => import('./Select'));
 export const Pre = React.lazy(() => import('./Pre'));
+export const MessageBox = React.lazy(() => import('./MessageBox'));

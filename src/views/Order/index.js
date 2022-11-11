@@ -7,6 +7,7 @@ import formatPrice from '~/utils/formatPrice';
 import { zipcode, phone, currency } from '~/utils/masks';
 import getAddress from './services/getAddress';
 import createOrder from './services/createOrder';
+import { MdInfoOutline } from 'react-icons/md';
 
 import { StyledMdKeyboardArrowLeft, Total, Wrapper, StyledError } from './styles';
 
@@ -21,6 +22,7 @@ import {
   Line,
   Radio,
   CheckBox,
+  MessageBox,
 } from '~/components';
 import { ToastContainer, toast } from 'react-toastify';
 import moment from 'moment';
@@ -302,6 +304,14 @@ ${response.params.paymentMethods[values.paymentMethod].label}${values.paymentMet
                             />
                           </Col>
                         </>
+                      ) : ''
+                    }
+                    {
+                      values.paymentMethod === 'PIX' ? (
+                        <MessageBox theme='warning'>
+                          <MdInfoOutline style={{ marginRight: '5px', fontSize: '1.1rem' }} />
+                          O <strong>comprovante</strong> de pagamento deve ser encaminhado no <strong>WhatsApp</strong> para confirmação do pedido.
+                        </MessageBox>
                       ) : ''
                     }
                     {
