@@ -14,6 +14,7 @@ import {
   Radio,
   Input,
   Line,
+  CheckBox,
 } from '~/components';
 import OrderItemStatus from '../Orders/components/OrderItemStatus';
 import ItemBox from '../../components/ItemBox';
@@ -75,6 +76,7 @@ function OrdersDetails() {
             deliveryMethod: order.deliveryMethod,
             paymentMethod: order.paymentMethod,
             change: order.change ? currency(order.change) : '',
+            noChange: order.change ? [] : [1],
           }}
         >
           {
@@ -208,16 +210,27 @@ function OrdersDetails() {
                   </Col>
                   {
                     values.paymentMethod === 'CASH' ? (
-                      <Col cols={6} xs={12}>
-                        <Input
-                          className="mt-10"
-                          type="text"
-                          placeholder="Digite aqui..."
-                          label="Troco?"
-                          name="change"
-                          disabled
-                        />
-                      </Col>
+                      <>
+                        <Col cols={6} xs={12}>
+                          <Input
+                            className="mt-10"
+                            type="text"
+                            placeholder="Digite aqui..."
+                            label="Troco para:"
+                            name="change"
+                            disabled
+                          />
+                        </Col>
+                        <Col cols={6} xs={12}>
+                          <CheckBox
+                            type="checkbox"
+                            name="noChange"
+                            label="Não preciso de troco"
+                            value={1}
+                            disabled
+                          />
+                        </Col>
+                      </>
                     ) : ''
                   }
                 </Inline>

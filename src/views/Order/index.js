@@ -20,6 +20,7 @@ import {
   Button,
   Line,
   Radio,
+  CheckBox,
 } from '~/components';
 import { ToastContainer, toast } from 'react-toastify';
 import moment from 'moment';
@@ -45,6 +46,10 @@ function MenuPage() {
     }
 
     values.phone = `55${values.phone.replace(/\D/g, '')}`;
+
+    if (values.noChange.includes(1)) {
+      values.change = '';
+    }
 
     setIsLoading(true);
 
@@ -118,6 +123,7 @@ ${response.params.paymentMethods[values.paymentMethod].label}${values.paymentMet
     deliveryMethod: '',
     paymentMethod: '',
     change: '',
+    noChange: [],
   }), [customer]);
 
   return (
@@ -274,18 +280,28 @@ ${response.params.paymentMethods[values.paymentMethod].label}${values.paymentMet
                     </Col>
                     {
                       values.paymentMethod === 'CASH' ? (
-                        <Col cols={6} xs={12}>
-                          <Input
-                            className="mt-10"
-                            type="text"
-                            placeholder="Digite aqui..."
-                            label="Troco?"
-                            name="change"
-                            onChange={(e) => {
-                              return currency(e);
-                            }}
-                          />
-                        </Col>
+                        <>
+                          <Col cols={6} xs={12}>
+                            <Input
+                              className="mt-10"
+                              type="text"
+                              placeholder="Digite aqui..."
+                              label="Troco para:"
+                              name="change"
+                              onChange={(e) => {
+                                return currency(e);
+                              }}
+                            />
+                          </Col>
+                          <Col cols={6} xs={12}>
+                            <CheckBox
+                              type="checkbox"
+                              name="noChange"
+                              label="Não preciso de troco"
+                              value={1}
+                            />
+                          </Col>
+                        </>
                       ) : ''
                     }
                     {
