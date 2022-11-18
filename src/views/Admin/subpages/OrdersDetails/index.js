@@ -69,7 +69,6 @@ function OrdersDetails() {
             fullName: order.customer.name,
             phone: order.customer.phone ? phone(order.customer.phone.substring(2)) : '',
             customerId: order.customerId,
-            zipcode: order.zipcode,
             number: order.number,
             address: order.address,
             district: order.district,
@@ -129,17 +128,6 @@ function OrdersDetails() {
                     <Inline className="mt-20">
                       <T1 style={{ fontWeight: '400' }}>Endereço</T1>
                       <Line className="mt-10" />
-                      <Col cols={6}>
-                        <Input
-                          className="mt-10 mr-10"
-                          type="text"
-                          placeholder="Digite aqui..."
-                          label="CEP"
-                          name="zipcode"
-                          maxLength={9}
-                          disabled
-                        />
-                      </Col>
                       <Col cols={6}>
                         <Input
                           className="mt-10"

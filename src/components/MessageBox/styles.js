@@ -7,9 +7,9 @@ const themes = {
         backgroundColor: '#F8D7DA',
     },
     info: {
-        color: '',
-        borderColor: '',
-        backgroundColor: '',
+        color: '#004085',
+        borderColor: '#b8daff',
+        backgroundColor: '#cce5ff',
     },
     warning: {
         color: '#856404',
@@ -21,7 +21,6 @@ const themes = {
 export const Container = styled.div`
     width: 100%;
     font-weight: 400;
-    margin: 20px auto;
     padding: 10px 15px;
     border: 1px solid ${({theme}) => themes[theme].borderColor || themes.error.borderColor};
     border-radius: 5px;

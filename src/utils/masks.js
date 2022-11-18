@@ -19,3 +19,7 @@ export const currency = (value) => {
 
   return value;
 };
+
+export function number(value) {
+  return value.replace(/[^\d-]/g, "");
+}

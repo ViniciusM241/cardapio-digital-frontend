@@ -4,9 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import useBreakpoints from '~/hooks/useBreakpoints';
 import orderSchema from '~/utils/validations/orderSchema';
 import formatPrice from '~/utils/formatPrice';
-import { zipcode, phone, currency } from '~/utils/masks';
-import getAddress from './services/getAddress';
+import { phone, currency } from '~/utils/masks';
 import createOrder from './services/createOrder';
+import getParams from './services/getParams';
 import { MdInfoOutline } from 'react-icons/md';
 
 import { StyledMdKeyboardArrowLeft, Total, Wrapper, StyledError } from './styles';
@@ -23,6 +23,7 @@ import {
   Radio,
   CheckBox,
   MessageBox,
+  P,
 } from '~/components';
 import { ToastContainer, toast } from 'react-toastify';
 import moment from 'moment';
@@ -35,6 +36,17 @@ function MenuPage() {
   const cart = useSelector(state => state.menu.cart);
 
   const [isLoading, setIsLoading] = useState(false);
+  const [params, setParams] = useState({});
+
+  const _getParams = async () => {
+    const params = await getParams();
+
+    setParams(params);
+  };
+
+  useEffect(() => {
+    _getParams();
+  }, []);
 
   useEffect(() => {
     if (!cart.itemsOrdered.length) {
@@ -63,9 +75,10 @@ function MenuPage() {
       toast.success('Dados salvos com sucesso');
 
       const url = generateWhatsMessage(values, res);
-      console.log(url)
-      // window.open(url, '_blank');
-      redirect(url);
+
+      if (params.businessNumber) {
+        redirect(url);
+      }
 
       navigate('/');
     } else {
@@ -83,7 +96,7 @@ function MenuPage() {
   };
 
   const generateWhatsMessage = (values, response) => {
-    const API_URL = `https://api.whatsapp.com/send?phone=${process.env.REACT_APP_PHONENUMBER}`;
+    const API_URL = `https://api.whatsapp.com/send?phone=${params.businessNumber}`;
 
     const mensagem = `
 *🛎️#${String(response.id).padStart(3, '0')} NOVO PEDIDO*
@@ -95,8 +108,7 @@ ${cart.itemsOrdered.map(item => `${item.quantity}x ${item.item.name} *${formatPr
 *👤Cliente:*
 ${values.fullName}
 
-*${values.deliveryMethod === 'DELIVERY' ? 'Subtotal' : 'Total'}:* ${formatPrice(cart.total)}
-${values.deliveryMethod === 'DELIVERY' ? `*Total com entrega:* ${formatPrice((parseFloat(cart.total) + parseFloat(response.params.deliveryFee || 5)).toFixed(2))}` : '*Retirada*'}
+*Total:* ${formatPrice(cart.total)}
 
 *💰Pagamento:*
 ${response.params.paymentMethods[values.paymentMethod].label}${values.paymentMethod === 'CASH' ? `, troco para R$ ${values.change}` : ''}
@@ -105,20 +117,14 @@ ${response.params.paymentMethods[values.paymentMethod].label}${values.paymentMet
     return `${API_URL}&text=${encodeURIComponent(mensagem)}`;
   }
 
-  const handleZipcodeChange = async (value, setValue) => {
-    if (value.length < 8) return;
-
-    const address = await getAddress(value.replace('-', ''));
-
-    setValue({ target: { value: address.address }}, 'address');
-    setValue({ target: { value: address.district }}, 'district');
-  }
+  const formatMinutes = (minutes) => {
+    return minutes >= 60 ? `${(minutes / 60).toFixed(2)}h` : `${Number(minutes).toFixed(2)}m`
+  };
 
   const initialValues = useMemo(() => ({
     fullName: customer.name,
     phone: customer.phone ? phone(customer.phone.substring(2)) : '',
     customerId: customer.id,
-    zipcode: '',
     number: '',
     address: '',
     district: '',
@@ -197,28 +203,25 @@ ${response.params.paymentMethods[values.paymentMethod].label}${values.paymentMet
                         </Col>
                       ) : ''
                     }
+                    {
+                      values.deliveryMethod === 'TAKEOUT' && params.takeoutTime ? (
+                        <MessageBox className="mt-10" theme='info'>
+                          <MdInfoOutline style={{ marginRight: '5px', fontSize: '1.1rem' }} />
+                          O tempo de espera para <strong>retirada</strong> é de <strong>{formatMinutes(params.takeoutTime)}</strong>
+                        </MessageBox>
+                      ) : values.deliveryMethod === 'DELIVERY' && params.deliveryTime ? (
+                        <MessageBox className="mt-10" theme='info'>
+                          <MdInfoOutline style={{ marginRight: '5px', fontSize: '1.1rem' }} />
+                          O tempo de espera para <strong>entrega</strong> é de <strong>{formatMinutes(params.deliveryTime)}</strong>
+                        </MessageBox>
+                      ) : ''
+                    }
                   </Inline>
                   {
                     values.deliveryMethod === 'DELIVERY' ? (
                       <Inline className="mt-20">
                         <T1 style={{ fontWeight: '400' }}>Endereço</T1>
                         <Line className="mt-10" />
-                        <Col cols={6}>
-                          <Input
-                            className="mt-10 mr-10"
-                            type="text"
-                            placeholder="Digite aqui..."
-                            label="CEP"
-                            name="zipcode"
-                            maxLength={9}
-                            onChange={(e) => {
-                              const newZipcode = zipcode(e);
-
-                              return newZipcode;
-                            }}
-                            onBlur={(e) => handleZipcodeChange(e.target.value, setValue)}
-                          />
-                        </Col>
                         <Col cols={6}>
                           <Input
                             className="mt-10"
@@ -308,10 +311,15 @@ ${response.params.paymentMethods[values.paymentMethod].label}${values.paymentMet
                     }
                     {
                       values.paymentMethod === 'PIX' ? (
-                        <MessageBox theme='warning'>
-                          <MdInfoOutline style={{ marginRight: '5px', fontSize: '1.1rem' }} />
-                          O <strong>comprovante</strong> de pagamento deve ser encaminhado no <strong>WhatsApp</strong> para confirmação do pedido.
-                        </MessageBox>
+                        <>
+                          <MessageBox className="mt-20" theme='warning'>
+                            <MdInfoOutline style={{ marginRight: '5px', fontSize: '1.1rem' }} />
+                            O <strong>comprovante</strong> de pagamento deve ser encaminhado no <strong>WhatsApp</strong> para confirmação do pedido.
+                          </MessageBox>
+                          {
+                           params.pix ? <P className='mt-10' style={{ lineBreak: 'anywhere' }}><strong>Chave Pix: </strong>{params.pix}</P> : ''
+                          }
+                        </>
                       ) : ''
                     }
                     {
