@@ -162,7 +162,7 @@ function ItemDetails() {
             !!selectedItem.extras.length && (
               <>
                 <Col cols={12}>
-                  <T1 style={{ fontWeight: '400' }} className='mt-20'>Adicionais</T1>
+                  <T1 style={{ fontWeight: '400' }} className='mt-20'>{selectedItem.special ? 'Ingredientes' : 'Adicionais'}</T1>
                 </Col>
                 <Col cols={12}>
                   <Line className='mt-10' />

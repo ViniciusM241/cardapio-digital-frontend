@@ -77,7 +77,7 @@ function Config() {
     deliveryTime: params.deliveryTime ? String(params.deliveryTime) : '0',
     takeoutTime: params.takeoutTime ? String(params.takeoutTime) : '0',
     pix: params.pix || '',
-    deliveryFee: params.pix || '0',
+    deliveryFee: params.deliveryFee || '0',
   }), [params]);
 
   return (

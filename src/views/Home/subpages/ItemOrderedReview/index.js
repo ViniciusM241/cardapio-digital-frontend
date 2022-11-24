@@ -170,7 +170,7 @@ function ItemOrderedReview() {
             !!selectedItem.extras.length && (
               <>
                 <Col cols={12}>
-                  <T2 style={{ fontWeight: '600' }} className='mt-20'>Adicionais</T2>
+                  <T2 style={{ fontWeight: '600' }} className='mt-20'>{selectedItem.special ? 'Ingredientes' : 'Adicionais'}</T2>
                 </Col>
                 <Col cols={12}>
                   <Line className='mt-10' />

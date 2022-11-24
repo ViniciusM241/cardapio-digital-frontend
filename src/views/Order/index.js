@@ -103,12 +103,12 @@ function MenuPage() {
 ${moment().format('DD/MM HH:mm')}
 
 *📄Pedido:*
-${cart.itemsOrdered.map(item => `${item.quantity}x ${item.item.name} ${!item.special ? `*${formatPrice(item.total)}*` : ''}${item.extras.length ? '\n*Adicionais*:\n' : ''}${item.extras.length ? item.extras.map(extra => `${extra.extraItemsOrdered.quantity}x ${extra.name} *${formatPrice(extra.value)}*`).join('\n') : '' }
+${cart.itemsOrdered.map(item => `${item.quantity}x ${item.item.name} ${!item.special ? `*${formatPrice(item.total)}*` : ''}${item.extras.length ? item.special ? '\n*Ingredientes*:\n' : '\n*Adicionais*:\n' : ''}${item.extras.length ? item.extras.map(extra => `${extra.extraItemsOrdered.quantity}x ${extra.name} *${formatPrice(extra.value)}*`).join('\n') : '' }
 `).join('\n')}
 *👤Cliente:*
 ${values.fullName}
 
-${params.deliveryFee ? `*Subtotal:* ${formatPrice(cart.total)}\n*Total:* ${formatPrice(cart.total + params.deliveryFee)}` : `*Total:* ${formatPrice(cart.total)}`}
+${params.deliveryFee ? `*Subtotal:* ${formatPrice(cart.total)}\n*Total:* ${formatPrice((parseFloat(cart.total) + parseFloat(params.deliveryFee)).toFixed(2, '0'))}` : `*Total:* ${formatPrice(cart.total)}`}
 
 *💰Pagamento:*
 ${response.params.paymentMethods[values.paymentMethod].label}${values.paymentMethod === 'CASH' ? `, troco para R$ ${values.change}` : ''}
@@ -224,7 +224,7 @@ ${response.params.paymentMethods[values.paymentMethod].label}${values.paymentMet
                       type="radio"
                       value="DELIVERY"
                       name="deliveryMethod"
-                      label="Entrega"
+                      label={params.deliveryFee ? (<p>Entrega<br />+{formatPrice(params.deliveryFee)}</p>) : "Entrega"}
                     />
                   </Col>
                   {
