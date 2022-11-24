@@ -9,7 +9,7 @@ import createOrder from './services/createOrder';
 import getParams from './services/getParams';
 import { MdInfoOutline } from 'react-icons/md';
 
-import { StyledMdKeyboardArrowLeft, Total, Wrapper, StyledError } from './styles';
+import { StyledMdKeyboardArrowLeft, Total, Wrapper, StyledError, StyledPix } from './styles';
 
 import {
   Container,
@@ -23,7 +23,6 @@ import {
   Radio,
   CheckBox,
   MessageBox,
-  P,
 } from '~/components';
 import { toast } from 'react-toastify';
 import moment from 'moment';
@@ -195,8 +194,8 @@ ${response.params.paymentMethods[values.paymentMethod].label}${values.paymentMet
                 <Inline className="mt-20">
                   <T1 style={{ fontWeight: '400' }}>Forma de entrega</T1>
                   <Line className="mt-10" />
-                  <Col cols={6}>
-                  {
+                  <Col cols={12}>
+                    {
                       params.takeoutTime ? (
                         <MessageBox className="mt-10" theme='info'>
                           <MdInfoOutline style={{ marginRight: '5px', fontSize: '1.1rem' }} />
@@ -212,6 +211,8 @@ ${response.params.paymentMethods[values.paymentMethod].label}${values.paymentMet
                         </MessageBox>
                       ) : ''
                     }
+                  </Col>
+                  <Col cols={6}>
                     <Radio
                       type="radio"
                       value="TAKEOUT"
@@ -335,7 +336,7 @@ ${response.params.paymentMethods[values.paymentMethod].label}${values.paymentMet
                           O <strong>comprovante</strong> de pagamento deve ser encaminhado no <strong>WhatsApp</strong> para confirmação do pedido.
                         </MessageBox>
                         {
-                          params.pix ? <P className='mt-10' style={{ lineBreak: 'anywhere' }}><strong>Chave Pix: </strong>{params.pix}</P> : ''
+                          params.pix ? <StyledPix className='mt-20'><strong>Chave Pix: </strong><span>{params.pix}</span></StyledPix> : ''
                         }
                       </>
                     ) : ''
