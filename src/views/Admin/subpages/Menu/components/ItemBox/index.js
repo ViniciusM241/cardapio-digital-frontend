@@ -39,13 +39,19 @@ function ItemBox({ item, items, setItems }) {
           <P>{item.name}</P>
           <T1 className="mt-10" style={{ fontWeight: '400', fontSize: '1.8rem' }}>Descrição</T1>
           <LimitedP>{item.description}</LimitedP>
-          <T1 className="mt-10" style={{ fontWeight: '400', fontSize: '1.8rem' }}>Valor</T1>
-          <P>{formatPrice(item.value)}</P>
+          {
+            item.special || (
+              <>
+                <T1 className="mt-10" style={{ fontWeight: '400', fontSize: '1.8rem' }}>Valor</T1>
+                <P>{formatPrice(item.value)}</P>
+              </>
+            )
+          }
           <T1 className="mt-10" style={{ fontWeight: '400', fontSize: '1.8rem' }}>Categoria</T1>
           <P>{item.category?.name || '-'}</P>
         </Col>
         <Col cols={6} style={{ flexDirection: 'column', alignItems: 'flex-end', alignSelf: 'flex-start' }}>
-          <ActionButtons className="mb-10" onDelete={onDelete} onEdit={onEdit} />
+          <ActionButtons className="mb-10" onDelete={onDelete} onEdit={onEdit} item={item} />
           {
             item.imageURL ?
               <StyledImg src={item.imageURL} />

@@ -105,7 +105,6 @@ function Menu() {
         </Inline>
       </Container>
       <Plus onClick={redirect} />
-      <ToastContainer />
     </>
   );
 }

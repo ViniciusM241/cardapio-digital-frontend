@@ -8,12 +8,16 @@ import {
   Inline,
 } from '~/components';
 
-function ActionButtons({ onDelete, onEdit, ...props }) {
+function ActionButtons({ onDelete, onEdit, item, ...props }) {
   return (
     <Inline right {...props}>
-      <Delete className="mr-10" onClick={onDelete}>
-        <FaTrashAlt />
-      </Delete>
+      {
+        item?.special || (
+          <Delete className="mr-10" onClick={onDelete}>
+            <FaTrashAlt />
+          </Delete>
+        )
+      }
       <Edit onClick={onEdit}>
         <MdMode />
       </Edit>

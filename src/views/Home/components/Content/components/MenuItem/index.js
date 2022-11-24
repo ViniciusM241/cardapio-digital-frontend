@@ -25,7 +25,9 @@ function MenuItem({ item }) {
         <Col cols={8} style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
           <T3 style={{ fontWeight: '600' }}>{item.name}</T3>
           <StyledP className='mt-10'>{item.description}</StyledP>
-          <T3 className='mt-10'>{formatPrice(item.value)}</T3>
+          {
+            item.special || <T3 className='mt-10'>{formatPrice(item.value)}</T3>
+          }
         </Col>
         <Col cols={4}>
           <Inline right>

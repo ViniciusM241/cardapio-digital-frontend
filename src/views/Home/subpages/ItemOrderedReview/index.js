@@ -4,6 +4,7 @@ import { getItemOrderedById } from '../../store/actions';
 import { useLocation, useNavigate } from 'react-router-dom';
 import useBreakpoints from '~/hooks/useBreakpoints';
 import updateCartService from './services/updateCartService';
+import { toast } from 'react-toastify';
 
 import { StyledMdKeyboardArrowLeft, StyledImg, Wrapper, Total, ActionButton } from './styles';
 
@@ -51,8 +52,6 @@ function ItemOrderedReview() {
   };
 
   const updateCart = async () => {
-    setIsLoading(true);
-
     const filteredExtras = selectedItem.extras.filter(x => !!x.extraItemsOrdered.quantity);
     const extras = filteredExtras.reduce((acc, cur) => {
       return [
@@ -64,6 +63,19 @@ function ItemOrderedReview() {
       ];
     }, []);
 
+    if (selectedItem.special) {
+      const hasBread = filteredExtras.some(extra => !!extra.name.toLowerCase().match(/pao |pão /)?.length);
+      const hasHamburguer = filteredExtras.some(extra => !!extra.name.toLowerCase().match(/hamburguer |hambúrguer |hamburger |burger |burguer |búrguer /)?.length);
+
+      if (!hasBread) {
+        return toast.warn('Você deve adicionar pelo menos um Pão ao lanche');
+      }
+
+      if (!hasHamburguer) {
+        return toast.warn('Você deve adicionar pelo menos um Hambúrguer ao lanche');
+      }
+    }
+
     const payload = {
       notes,
       quantity,
@@ -72,6 +84,7 @@ function ItemOrderedReview() {
       itemId: selectedItem.item.id,
     };
 
+    setIsLoading(true);
     const isOK = await updateCartService(selectedItem.id, payload);
     setIsLoading(false);
 
@@ -141,9 +154,15 @@ function ItemOrderedReview() {
                 <Col cols={9} xs={12}>
                   <P className='mt-10'>{selectedItem.item.description}</P>
                 </Col>
-                <Col cols={9} xs={12}>
-                  <P style={{ fontWeight: '600' }} className='mt-10'>{formatPrice(selectedItem.item.value)}</P>
-                </Col>
+                {
+                  selectedItem.special || (
+                    <>
+                      <Col cols={9} xs={12}>
+                        <P style={{ fontWeight: '600' }} className='mt-10'>{formatPrice(selectedItem.item.value)}</P>
+                      </Col>
+                    </>
+                  )
+                }
               </Inline>
             </Col>
           </Inline>

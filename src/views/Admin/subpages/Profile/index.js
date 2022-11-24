@@ -54,53 +54,50 @@ function Profile() {
   }), [profile]);
 
   return (
-    <>
-      <Container>
-        <T1 className="mb-10">Lista de clientes</T1>
-        <Inline>
-          <Form
-            initialValues={initialValues}
-            onSubmit={handleSubmit}
-            validationSchema={profileSchema}
-          >
-            {
-              () => (
-                <>
-                  <Input
-                    type="text"
-                    name="name"
-                    label="Nome"
-                    className="mt-10"
-                  />
-                  <Input
-                    type="email"
-                    name="email"
-                    label="E-mail"
-                    className="mt-10"
-                  />
-                  <Input
-                    type="password"
-                    name="password"
-                    label="Senha"
-                    className="mt-10"
-                  />
-                  <Input
-                    type="password"
-                    name="confirmPassword"
-                    label="Confirmar Senha"
-                    className="mt-10"
-                  />
-                  <Inline right>
-                    <Button type="submit" className="mt-10" isLoading={isLoading}>Salvar</Button>
-                  </Inline>
-                </>
-              )
-            }
-          </Form>
-        </Inline>
-      </Container>
-      <ToastContainer />
-    </>
+    <Container>
+      <T1 className="mb-10">Lista de clientes</T1>
+      <Inline>
+        <Form
+          initialValues={initialValues}
+          onSubmit={handleSubmit}
+          validationSchema={profileSchema}
+        >
+          {
+            () => (
+              <>
+                <Input
+                  type="text"
+                  name="name"
+                  label="Nome"
+                  className="mt-10"
+                />
+                <Input
+                  type="email"
+                  name="email"
+                  label="E-mail"
+                  className="mt-10"
+                />
+                <Input
+                  type="password"
+                  name="password"
+                  label="Senha"
+                  className="mt-10"
+                />
+                <Input
+                  type="password"
+                  name="confirmPassword"
+                  label="Confirmar Senha"
+                  className="mt-10"
+                />
+                <Inline right>
+                  <Button type="submit" className="mt-10" isLoading={isLoading}>Salvar</Button>
+                </Inline>
+              </>
+            )
+          }
+        </Form>
+      </Inline>
+    </Container>
   );
 }
 

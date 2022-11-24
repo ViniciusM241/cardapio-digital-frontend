@@ -79,9 +79,15 @@ function ItemOrdersDetails() {
                 <Col cols={9} xs={12}>
                   <Pre className='mt-10'>{item.item?.description}</Pre>
                 </Col>
-                <Col cols={9} xs={12}>
-                  <P style={{ fontWeight: '600' }} className='mt-10'>{formatPrice(item.item?.value)}</P>
-                </Col>
+                {
+                  item.special || (
+                    <>
+                      <Col cols={9} xs={12}>
+                        <P style={{ fontWeight: '600' }} className='mt-10'>{formatPrice(item.item?.value)}</P>
+                      </Col>
+                    </>
+                  )
+                }
               </Inline>
             </Col>
           </Inline>

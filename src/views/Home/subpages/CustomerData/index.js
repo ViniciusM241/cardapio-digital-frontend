@@ -199,7 +199,6 @@ function CustomerData() {
           )
         }
       </Form>
-      <ToastContainer />
     </Container>
   );
 }

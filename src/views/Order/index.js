@@ -25,7 +25,7 @@ import {
   MessageBox,
   P,
 } from '~/components';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import moment from 'moment';
 
 function MenuPage() {
@@ -55,8 +55,8 @@ function MenuPage() {
   }, [cart]);
 
   const handleSubmit = async ({ values }) => {
-    if (parseFloat(cart.total) <= 0 ) {
-      return toast.error('Valor mínimo não atingido');
+    if (parseFloat(cart.total) < 10) {
+      return toast.error('Valor mínimo de R$ 10,00 não atingido');
     }
 
     values.phone = `55${values.phone.replace(/\D/g, '')}`;
@@ -103,7 +103,7 @@ function MenuPage() {
 ${moment().format('DD/MM HH:mm')}
 
 *📄Pedido:*
-${cart.itemsOrdered.map(item => `${item.quantity}x ${item.item.name} *${formatPrice(item.total)}*${item.extras.length ? '\n*Adicionais*:\n' : ''}${item.extras.length ? item.extras.map(extra => `${extra.extraItemsOrdered.quantity}x ${extra.name} *${formatPrice(extra.value)}*`).join('\n') : '' }
+${cart.itemsOrdered.map(item => `${item.quantity}x ${item.item.name} ${!item.special ? `*${formatPrice(item.total)}*` : ''}${item.extras.length ? '\n*Adicionais*:\n' : ''}${item.extras.length ? item.extras.map(extra => `${extra.extraItemsOrdered.quantity}x ${extra.name} *${formatPrice(extra.value)}*`).join('\n') : '' }
 `).join('\n')}
 *👤Cliente:*
 ${values.fullName}
@@ -117,9 +117,25 @@ ${response.params.paymentMethods[values.paymentMethod].label}${values.paymentMet
     return `${API_URL}&text=${encodeURIComponent(mensagem)}`;
   }
 
-  const formatMinutes = (minutes) => {
-    return minutes >= 60 ? `${(minutes / 60).toFixed(2)}h` : `${Number(minutes).toFixed(2)}m`
-  };
+  function formatMinutes(totalMinutes) {
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = totalMinutes % 60;
+    let str = '';
+
+    if (hours > 0) {
+      str += `${padToTwoDigits(hours)}h`;
+    }
+
+    if (minutes > 0) {
+      str += `${padToTwoDigits(minutes)}m`;
+    }
+
+    return str;
+  }
+
+  function padToTwoDigits(num) {
+    return num.toString().padStart(2, '0');
+  }
 
   const initialValues = useMemo(() => ({
     fullName: customer.name,
@@ -135,218 +151,215 @@ ${response.params.paymentMethods[values.paymentMethod].label}${values.paymentMet
   }), [customer]);
 
   return (
-    <>
-      <Container>
-        <Inline className="mt-40">
-          <Col cols={1} xs={3}>
-            <StyledMdKeyboardArrowLeft onClick={() => navigate('/')} />
-          </Col>
-          <Col cols={11} xs={9}>
-            <T1>Pedido</T1>
-          </Col>
-        </Inline>
-        <Form
-          initialValues={initialValues}
-          onSubmit={handleSubmit}
-          validationSchema={orderSchema}
-        >
-          {
-            ({ values, setValue, errors }) => (
-              <Wrapper>
-                <div>
-                  <Inline className="mt-20">
-                    <T1 style={{ fontWeight: '400' }}>Dados pessoais</T1>
-                    <Line className="mt-10" />
-                    <Input
-                      className="mt-10"
-                      type="text"
-                      placeholder="Digite aqui..."
-                      label="Nome completo"
-                      name="fullName"
-                    />
-                    <Input
-                      className="mt-10"
-                      type="text"
-                      placeholder="Digite aqui..."
-                      label="Número WhatsApp"
-                      name="phone"
-                      onChange={(e) => {
-                        const newPhone = phone(e);
+    <Container>
+      <Inline className="mt-40">
+        <Col cols={1} xs={3}>
+          <StyledMdKeyboardArrowLeft onClick={() => navigate('/')} />
+        </Col>
+        <Col cols={11} xs={9}>
+          <T1>Pedido</T1>
+        </Col>
+      </Inline>
+      <Form
+        initialValues={initialValues}
+        onSubmit={handleSubmit}
+        validationSchema={orderSchema}
+      >
+        {
+          ({ values, errors }) => (
+            <Wrapper>
+              <div>
+                <Inline className="mt-20">
+                  <T1 style={{ fontWeight: '400' }}>Dados pessoais</T1>
+                  <Line className="mt-10" />
+                  <Input
+                    className="mt-10"
+                    type="text"
+                    placeholder="Digite aqui..."
+                    label="Nome completo"
+                    name="fullName"
+                  />
+                  <Input
+                    className="mt-10"
+                    type="text"
+                    placeholder="Digite aqui..."
+                    label="Número WhatsApp"
+                    name="phone"
+                    onChange={(e) => {
+                      const newPhone = phone(e);
 
-                        return newPhone;
-                      }}
+                      return newPhone;
+                    }}
+                  />
+                </Inline>
+                <Inline className="mt-20">
+                  <T1 style={{ fontWeight: '400' }}>Forma de entrega</T1>
+                  <Line className="mt-10" />
+                  <Col cols={6}>
+                    <Radio
+                      type="radio"
+                      value="TAKEOUT"
+                      name="deliveryMethod"
+                      label="Retirada"
                     />
-                  </Inline>
-                  <Inline className="mt-20">
-                    <T1 style={{ fontWeight: '400' }}>Forma de entrega</T1>
-                    <Line className="mt-10" />
-                    <Col cols={6}>
-                      <Radio
-                        type="radio"
-                        value="TAKEOUT"
-                        name="deliveryMethod"
-                        label="Retirada"
-                      />
-                    </Col>
-                    <Col cols={6}>
-                      <Radio
-                        type="radio"
-                        value="DELIVERY"
-                        name="deliveryMethod"
-                        label={<p>Entrega<br /> + R$ 5,00</p>}
-                      />
-                    </Col>
-                    {
-                      errors.deliveryMethod ? (
-                        <Col cols={12}>
-                          <StyledError className="mt-10">{errors.deliveryMethod}</StyledError>
-                        </Col>
-                      ) : ''
-                    }
-                    {
-                      values.deliveryMethod === 'TAKEOUT' && params.takeoutTime ? (
-                        <MessageBox className="mt-10" theme='info'>
-                          <MdInfoOutline style={{ marginRight: '5px', fontSize: '1.1rem' }} />
-                          O tempo de espera para <strong>retirada</strong> é de <strong>{formatMinutes(params.takeoutTime)}</strong>
-                        </MessageBox>
-                      ) : values.deliveryMethod === 'DELIVERY' && params.deliveryTime ? (
-                        <MessageBox className="mt-10" theme='info'>
-                          <MdInfoOutline style={{ marginRight: '5px', fontSize: '1.1rem' }} />
-                          O tempo de espera para <strong>entrega</strong> é de <strong>{formatMinutes(params.deliveryTime)}</strong>
-                        </MessageBox>
-                      ) : ''
-                    }
-                  </Inline>
+                  </Col>
+                  <Col cols={6}>
+                    <Radio
+                      type="radio"
+                      value="DELIVERY"
+                      name="deliveryMethod"
+                      label={<p>Entrega<br /> + R$ 5,00</p>}
+                    />
+                  </Col>
                   {
-                    values.deliveryMethod === 'DELIVERY' ? (
-                      <Inline className="mt-20">
-                        <T1 style={{ fontWeight: '400' }}>Endereço</T1>
-                        <Line className="mt-10" />
-                        <Col cols={6}>
+                    errors.deliveryMethod ? (
+                      <Col cols={12}>
+                        <StyledError className="mt-10">{errors.deliveryMethod}</StyledError>
+                      </Col>
+                    ) : ''
+                  }
+                  {
+                    values.deliveryMethod === 'TAKEOUT' && params.takeoutTime ? (
+                      <MessageBox className="mt-10" theme='info'>
+                        <MdInfoOutline style={{ marginRight: '5px', fontSize: '1.1rem' }} />
+                        O tempo de espera para <strong>retirada</strong> é de <strong>{formatMinutes(params.takeoutTime)}</strong>
+                      </MessageBox>
+                    ) : values.deliveryMethod === 'DELIVERY' && params.deliveryTime ? (
+                      <MessageBox className="mt-10" theme='info'>
+                        <MdInfoOutline style={{ marginRight: '5px', fontSize: '1.1rem' }} />
+                        O tempo de espera para <strong>entrega</strong> é de <strong>{formatMinutes(params.deliveryTime)}</strong>
+                      </MessageBox>
+                    ) : ''
+                  }
+                </Inline>
+                {
+                  values.deliveryMethod === 'DELIVERY' ? (
+                    <Inline className="mt-20">
+                      <T1 style={{ fontWeight: '400' }}>Endereço</T1>
+                      <Line className="mt-10" />
+                      <Col cols={6}>
+                        <Input
+                          className="mt-10"
+                          type="text"
+                          placeholder="Digite aqui..."
+                          label="Número"
+                          name="number"
+                        />
+                      </Col>
+                      <Input
+                        className="mt-10"
+                        type="text"
+                        placeholder="Digite aqui..."
+                        label="Endereço"
+                        name="address"
+                      />
+                      <Input
+                        className="mt-10"
+                        type="text"
+                        placeholder="Digite aqui..."
+                        label="Bairro"
+                        name="district"
+                      />
+                    </Inline>
+                  ) : ''
+                }
+                <Inline className="mt-20">
+                  <T1 style={{ fontWeight: '400' }}>Forma de pagamento</T1>
+                  <Line className="mt-10" />
+                  <Col cols={3} xs={12}>
+                    <Radio
+                      type="radio"
+                      value="CREDIT"
+                      name="paymentMethod"
+                      label="Cartão de Crédito"
+                    />
+                  </Col>
+                  <Col cols={3} xs={12}>
+                    <Radio
+                      type="radio"
+                      value="DEBIT"
+                      name="paymentMethod"
+                      label="Cartão de Débito"
+                    />
+                  </Col>
+                  <Col cols={3} xs={12}>
+                    <Radio
+                      type="radio"
+                      value="PIX"
+                      name="paymentMethod"
+                      label="PIX"
+                    />
+                  </Col>
+                  <Col cols={3} xs={12}>
+                    <Radio
+                      type="radio"
+                      value="CASH"
+                      name="paymentMethod"
+                      label="Dinheiro"
+                    />
+                  </Col>
+                  {
+                    values.paymentMethod === 'CASH' ? (
+                      <>
+                        <Col cols={6} xs={12}>
                           <Input
                             className="mt-10"
                             type="text"
                             placeholder="Digite aqui..."
-                            label="Número"
-                            name="number"
+                            label="Troco para:"
+                            name="change"
+                            onChange={(e) => {
+                              return currency(e);
+                            }}
                           />
                         </Col>
-                        <Input
-                          className="mt-10"
-                          type="text"
-                          placeholder="Digite aqui..."
-                          label="Endereço"
-                          name="address"
-                        />
-                        <Input
-                          className="mt-10"
-                          type="text"
-                          placeholder="Digite aqui..."
-                          label="Bairro"
-                          name="district"
-                        />
-                      </Inline>
+                        <Col cols={6} xs={12}>
+                          <CheckBox
+                            type="checkbox"
+                            name="noChange"
+                            label="Não preciso de troco"
+                            value={1}
+                          />
+                        </Col>
+                      </>
                     ) : ''
                   }
-                  <Inline className="mt-20">
-                    <T1 style={{ fontWeight: '400' }}>Forma de pagamento</T1>
-                    <Line className="mt-10" />
-                    <Col cols={3} xs={12}>
-                      <Radio
-                        type="radio"
-                        value="CREDIT"
-                        name="paymentMethod"
-                        label="Cartão de Crédito"
-                      />
-                    </Col>
-                    <Col cols={3} xs={12}>
-                      <Radio
-                        type="radio"
-                        value="DEBIT"
-                        name="paymentMethod"
-                        label="Cartão de Débito"
-                      />
-                    </Col>
-                    <Col cols={3} xs={12}>
-                      <Radio
-                        type="radio"
-                        value="PIX"
-                        name="paymentMethod"
-                        label="PIX"
-                      />
-                    </Col>
-                    <Col cols={3} xs={12}>
-                      <Radio
-                        type="radio"
-                        value="CASH"
-                        name="paymentMethod"
-                        label="Dinheiro"
-                      />
-                    </Col>
-                    {
-                      values.paymentMethod === 'CASH' ? (
-                        <>
-                          <Col cols={6} xs={12}>
-                            <Input
-                              className="mt-10"
-                              type="text"
-                              placeholder="Digite aqui..."
-                              label="Troco para:"
-                              name="change"
-                              onChange={(e) => {
-                                return currency(e);
-                              }}
-                            />
-                          </Col>
-                          <Col cols={6} xs={12}>
-                            <CheckBox
-                              type="checkbox"
-                              name="noChange"
-                              label="Não preciso de troco"
-                              value={1}
-                            />
-                          </Col>
-                        </>
-                      ) : ''
-                    }
-                    {
-                      values.paymentMethod === 'PIX' ? (
-                        <>
-                          <MessageBox className="mt-20" theme='warning'>
-                            <MdInfoOutline style={{ marginRight: '5px', fontSize: '1.1rem' }} />
-                            O <strong>comprovante</strong> de pagamento deve ser encaminhado no <strong>WhatsApp</strong> para confirmação do pedido.
-                          </MessageBox>
-                          {
-                           params.pix ? <P className='mt-10' style={{ lineBreak: 'anywhere' }}><strong>Chave Pix: </strong>{params.pix}</P> : ''
-                          }
-                        </>
-                      ) : ''
-                    }
-                    {
-                      errors.paymentMethod ? (
-                        <Col cols={12}>
-                          <StyledError className="mt-10">{errors.paymentMethod}</StyledError>
-                        </Col>
-                      ) : ''
-                    }
-                  </Inline>
-                </div>
-                <Inline style={{ justifyContent: breakpoints.xs ? 'space-between' : 'flex-end' }} className='mt-20 mb-20'>
-                  <Total className="mr-20">
-                    Total {values.deliveryMethod === 'DELIVERY' ? 'com entrega' : ''} de<br />
-                    <strong>{formatPrice(values.deliveryMethod === 'DELIVERY' ? (Number(cart.total) + 5).toFixed(2) : cart.total)}</strong>
-                  </Total>
-                  <Button type="submit" isLoading={isLoading}>
-                    Finalizar
-                  </Button>
+                  {
+                    values.paymentMethod === 'PIX' ? (
+                      <>
+                        <MessageBox className="mt-20" theme='warning'>
+                          <MdInfoOutline style={{ marginRight: '5px', fontSize: '1.1rem' }} />
+                          O <strong>comprovante</strong> de pagamento deve ser encaminhado no <strong>WhatsApp</strong> para confirmação do pedido.
+                        </MessageBox>
+                        {
+                          params.pix ? <P className='mt-10' style={{ lineBreak: 'anywhere' }}><strong>Chave Pix: </strong>{params.pix}</P> : ''
+                        }
+                      </>
+                    ) : ''
+                  }
+                  {
+                    errors.paymentMethod ? (
+                      <Col cols={12}>
+                        <StyledError className="mt-10">{errors.paymentMethod}</StyledError>
+                      </Col>
+                    ) : ''
+                  }
                 </Inline>
-              </Wrapper>
-            )
-          }
-        </Form>
-      </Container>
-      <ToastContainer />
-    </>
+              </div>
+              <Inline style={{ justifyContent: breakpoints.xs ? 'space-between' : 'flex-end' }} className='mt-20 mb-20'>
+                <Total className="mr-20">
+                  Total {values.deliveryMethod === 'DELIVERY' ? 'com entrega' : ''} de<br />
+                  <strong>{formatPrice(values.deliveryMethod === 'DELIVERY' ? (Number(cart.total) + 5).toFixed(2) : cart.total)}</strong>
+                </Total>
+                <Button type="submit" isLoading={isLoading}>
+                  Finalizar
+                </Button>
+              </Inline>
+            </Wrapper>
+          )
+        }
+      </Form>
+    </Container>
   );
 }
 
