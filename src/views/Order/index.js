@@ -108,7 +108,7 @@ ${cart.itemsOrdered.map(item => `${item.quantity}x ${item.item.name} ${!item.spe
 *👤Cliente:*
 ${values.fullName}
 
-*Total:* ${formatPrice(cart.total)}
+${params.deliveryFee ? `*Subtotal:* ${formatPrice(cart.total)}\n*Total:* ${formatPrice(cart.total + params.deliveryFee)}` : `*Total:* ${formatPrice(cart.total)}`}
 
 *💰Pagamento:*
 ${response.params.paymentMethods[values.paymentMethod].label}${values.paymentMethod === 'CASH' ? `, troco para R$ ${values.change}` : ''}
@@ -196,6 +196,22 @@ ${response.params.paymentMethods[values.paymentMethod].label}${values.paymentMet
                   <T1 style={{ fontWeight: '400' }}>Forma de entrega</T1>
                   <Line className="mt-10" />
                   <Col cols={6}>
+                  {
+                      params.takeoutTime ? (
+                        <MessageBox className="mt-10" theme='info'>
+                          <MdInfoOutline style={{ marginRight: '5px', fontSize: '1.1rem' }} />
+                          O tempo de espera para <strong>retirada</strong> é de <strong>{formatMinutes(params.takeoutTime)}</strong>
+                        </MessageBox>
+                      ) : ''
+                    }
+                    {
+                      params.deliveryTime ? (
+                        <MessageBox className="mt-10" theme='info'>
+                          <MdInfoOutline style={{ marginRight: '5px', fontSize: '1.1rem' }} />
+                          O tempo de espera para <strong>entrega</strong> é de <strong>{formatMinutes(params.deliveryTime)}</strong>
+                        </MessageBox>
+                      ) : ''
+                    }
                     <Radio
                       type="radio"
                       value="TAKEOUT"
@@ -208,7 +224,7 @@ ${response.params.paymentMethods[values.paymentMethod].label}${values.paymentMet
                       type="radio"
                       value="DELIVERY"
                       name="deliveryMethod"
-                      label={<p>Entrega<br /> + R$ 5,00</p>}
+                      label="Entrega"
                     />
                   </Col>
                   {
@@ -216,19 +232,6 @@ ${response.params.paymentMethods[values.paymentMethod].label}${values.paymentMet
                       <Col cols={12}>
                         <StyledError className="mt-10">{errors.deliveryMethod}</StyledError>
                       </Col>
-                    ) : ''
-                  }
-                  {
-                    values.deliveryMethod === 'TAKEOUT' && params.takeoutTime ? (
-                      <MessageBox className="mt-10" theme='info'>
-                        <MdInfoOutline style={{ marginRight: '5px', fontSize: '1.1rem' }} />
-                        O tempo de espera para <strong>retirada</strong> é de <strong>{formatMinutes(params.takeoutTime)}</strong>
-                      </MessageBox>
-                    ) : values.deliveryMethod === 'DELIVERY' && params.deliveryTime ? (
-                      <MessageBox className="mt-10" theme='info'>
-                        <MdInfoOutline style={{ marginRight: '5px', fontSize: '1.1rem' }} />
-                        O tempo de espera para <strong>entrega</strong> é de <strong>{formatMinutes(params.deliveryTime)}</strong>
-                      </MessageBox>
                     ) : ''
                   }
                 </Inline>

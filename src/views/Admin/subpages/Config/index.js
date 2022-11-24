@@ -4,7 +4,7 @@ import getParams from './services/getParams';
 import updateParams from './services/updateParams';
 import disconnect from './services/disconnect';
 import useBreakpoints from '~/hooks/useBreakpoints';
-import { phone, number } from '~/utils/masks';
+import { phone, number, currency } from '~/utils/masks';
 import { toast } from 'react-toastify';
 import paramsSchema from '~/utils/validations/paramsSchema';
 
@@ -77,6 +77,7 @@ function Config() {
     deliveryTime: params.deliveryTime ? String(params.deliveryTime) : '0',
     takeoutTime: params.takeoutTime ? String(params.takeoutTime) : '0',
     pix: params.pix || '',
+    deliveryFee: params.pix || '0',
   }), [params]);
 
   return (
@@ -114,6 +115,20 @@ function Config() {
       <Inline className="mt-20">
         <T1 style={{ fontWeight: '400' }}>Parâmetros</T1>
         <Line className="mt-10" />
+        <Col cols={6} xs={12}>
+          <Input
+            className="mt-10"
+            type="text"
+            placeholder="Digite aqui..."
+            label="Taxa de Entrega:"
+            name="deliveryFee"
+            onChange={(e) => {
+              const newCurrency = currency(e);
+
+              return newCurrency;
+            }}
+          />
+        </Col>
         <Col cols={6} xs={12}>
           <Input
             className="mt-10"
