@@ -194,7 +194,7 @@ ${response.params.paymentMethods[values.paymentMethod].label}${values.paymentMet
                 <Inline className="mt-20">
                   <T1 style={{ fontWeight: '400' }}>Forma de entrega</T1>
                   <Line className="mt-10" />
-                  <Col cols={12}>
+                  <Col cols={12} style={{ flexDirection: 'column' }}>
                     {
                       params.takeoutTime ? (
                         <MessageBox className="mt-10" theme='info'>
