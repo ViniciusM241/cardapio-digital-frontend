@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { MdKeyboardArrowLeft } from 'react-icons/md';
+import { MdKeyboardArrowLeft, MdContentCopy } from 'react-icons/md';
 import colors from "~/utils/colors";
 import { P } from '~/components';
 
@@ -43,11 +43,22 @@ export const StyledError = styled.span`
 
 export const StyledPix = styled(P)`
   line-break: anywhere;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
 
-  span {
+  span.highlight {
     padding: 5px;
     border-radius: 2px;
 
     background-color: ${colors.GRAY};
   }
+`;
+
+export const StyledMdContentCopy = styled(MdContentCopy)`
+  font-size: 1.5rem;
+  color: #333;
+
+  cursor: pointer;
+  transition: all .2s ease;
 `;

@@ -26,7 +26,7 @@ function OrderItemStatus({ order, updateOrders, ...props }) {
 
   return (
     <>
-      <Container {...props} onClick={_updateOrderStatus}>
+      <Container {...props} color={order.status.color} fontColor={order.status.fontColor} onClick={_updateOrderStatus}>
         {order.status.label}
         <IconWrapper>
           {

@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import getOrderById from './services/getOrderById';
 import { phone, currency } from '~/utils/masks';
+import formatPrice from '~/utils/formatPrice';
+import getParams from './services/getParams';
 
 import { StyledMdKeyboardArrowLeft } from './styles';
 
@@ -24,12 +26,23 @@ function OrdersDetails() {
   const location = useLocation();
 
   const [order, setOrder] = useState(null);
+  const [params, setParams] = useState({});
+
+  const _getParams = async () => {
+    const params = await getParams();
+
+    setParams(params);
+  };
 
   const _getOrderById = async (id) => {
     const data = await getOrderById(id);
 
     setOrder(data);
   };
+
+  useEffect(() => {
+    _getParams();
+  }, []);
 
   useEffect(() => {
     const id = location.pathname.replace(/^(\D)+/g, '');
@@ -118,7 +131,7 @@ function OrdersDetails() {
                       type="radio"
                       value="DELIVERY"
                       name="deliveryMethod"
-                      label={<p>Entrega<br /> + R$ 5,00</p>}
+                      label={params.deliveryFee ? (<p>Entrega<br />+{formatPrice(params.deliveryFee)}</p>) : "Entrega"}
                       disabled
                     />
                   </Col>

@@ -7,9 +7,9 @@ import formatPrice from '~/utils/formatPrice';
 import { phone, currency } from '~/utils/masks';
 import createOrder from './services/createOrder';
 import getParams from './services/getParams';
-import { MdInfoOutline } from 'react-icons/md';
+import { MdInfoOutline} from 'react-icons/md';
 
-import { StyledMdKeyboardArrowLeft, Total, Wrapper, StyledError, StyledPix } from './styles';
+import { StyledMdKeyboardArrowLeft, Total, Wrapper, StyledError, StyledPix, StyledMdContentCopy } from './styles';
 
 import {
   Container,
@@ -36,6 +36,7 @@ function MenuPage() {
 
   const [isLoading, setIsLoading] = useState(false);
   const [params, setParams] = useState({});
+  const [showCopyButton, setShowCopyButton] = useState(false);
 
   const _getParams = async () => {
     const params = await getParams();
@@ -45,6 +46,11 @@ function MenuPage() {
 
   useEffect(() => {
     _getParams();
+  }, []);
+
+  useEffect(() => {
+    if (navigator.clipboard) setShowCopyButton(true);
+    else setShowCopyButton(false);
   }, []);
 
   useEffect(() => {
@@ -134,6 +140,18 @@ ${response.params.paymentMethods[values.paymentMethod].label}${values.paymentMet
 
   function padToTwoDigits(num) {
     return num.toString().padStart(2, '0');
+  }
+
+  function copyTextToClipboard(text) {
+    if (!navigator.clipboard) {
+      return;
+    }
+
+    navigator.clipboard.writeText(text).then(function() {
+      toast.success("Chave PIX copiada com sucesso!");
+    }, function() {
+      return;
+    });
   }
 
   const initialValues = useMemo(() => ({
@@ -336,7 +354,19 @@ ${response.params.paymentMethods[values.paymentMethod].label}${values.paymentMet
                           O <strong>comprovante</strong> de pagamento deve ser encaminhado no <strong>WhatsApp</strong> para confirmação do pedido.
                         </MessageBox>
                         {
-                          params.pix ? <StyledPix className='mt-20'><strong>Chave Pix: </strong><span>{params.pix}</span></StyledPix> : ''
+                          params.pix ? (
+                            <StyledPix className='mt-20'>
+                              <span>
+                                <strong>Chave Pix: </strong>
+                                <span className='highlight'>{params.pix}</span>
+                              </span>
+                              {
+                                showCopyButton ?
+                                  <StyledMdContentCopy onClick={() => copyTextToClipboard(params.pix)} />
+                                : ''
+                              }
+                            </StyledPix>
+                          ) : ''
                         }
                       </>
                     ) : ''

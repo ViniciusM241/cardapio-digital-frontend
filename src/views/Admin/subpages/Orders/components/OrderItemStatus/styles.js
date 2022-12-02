@@ -3,10 +3,11 @@ import colors from '~/utils/colors';
 
 export const Container = styled.div`
   width: 100%;
-  background-color: ${colors.YELLOW};
+  background-color: ${(props) => props.color || colors.YELLOW};
   height: 100%;
   border-radius: 20px;
   cursor: pointer;
+  color: ${props => props.fontColor || colors.TEXT};
 
   padding: 8px;
 
@@ -23,6 +24,7 @@ export const IconWrapper = styled.div`
   background-color: #FFF;
   border-radius: 20px;
   box-shadow: 1px 1px 1px rgba(0, 0, 0, .25);
+  color: ${colors.TEXT};
 
   display: flex;
   align-items: center;
